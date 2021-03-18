@@ -8,7 +8,7 @@
       <li class="pure-menu-item"><a @click="select('Brazil')" href="#" class="pure-menu-link">Brazil</a></li>
     </ul>
   </div>
-  <SongList :products="products" />
+  <SongList :songs="songs" />
 </div>
 </template>
 

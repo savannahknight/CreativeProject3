@@ -36,7 +36,7 @@ export default {
         }
       });
       if (!found) {
-        this.$root.$data.cart.push({
+        this.$root.$data.playlist.push({
           id: id,
           quantity: 1,
           name: name,
@@ -51,7 +51,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .wrapper {
   display: flex;
   align-items: center;
@@ -85,3 +85,4 @@ export default {
   padding: 10px 30px;
   height: 80px;
 }
+</style>

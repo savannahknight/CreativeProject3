@@ -3,19 +3,19 @@
     <div id="menu">
       <div id="brand">
         <router-link to="/">
-          <img src="/images/logo2.jpg">
+          <img src="require('/images/logo2.jpg')">
           </router-link>
       </div>
       <div id="side">
-        <router-link to="/playlist">
-        <div class="menu-item playlist">
+        <router-link to="/genre">
+        <div class="menu-item genre">
           <img src="/images/globe.png">
-          <p>Browse</p>
+          <p>Genre</p>
         </div>
       </router-link>
-      <router-link to="/cart">
+      <router-link to="/playlist">
         <div class="menu-item">
-          <img src="/images/music.png">
+          <img src="require('/images/music.png')">
           <p>{{calcQuantity}} items</p>
         </div>
       </router-link>
@@ -57,7 +57,7 @@ body {
   margin-bottom: 50px;
 }
 #menu a {
-  color: #B84901;
+  color: red;
 }
 #brand {
   grid-area: brand;
@@ -71,6 +71,7 @@ body {
   grid-area: side;
   display: flex;
   justify-content: flex-end;
+  color: pink;
 }
 #side img {
   width: 50px;
@@ -86,7 +87,7 @@ body {
   margin-right: 50px;
 }
 .footer {
-  background: #F2921D;
+  background: black;
   left: 0;
   position: fixed;
   bottom: 0;
@@ -97,10 +98,10 @@ body {
   padding: 10px;
 }
 .footer a{
-  color: black;
+  color: white;
 }
 a, a:hover, a:focus {
-  color: white;
+  color: pink;
   text-decoration: none;
   transition: all 0.3s;
 }

@@ -4,6 +4,11 @@
   <div class="heading">
   <h1>Your Playlist</h1>
   </div>
+  <div class="search">
+    <form class="pure-form">
+      <i class="fas fa-search"></i><input v-model="searchText" />
+    </form>
+  </div>
   <div class="empty">
   <h4 v-show="this.$root.$data.playlist.length === 0">There are no songs in your playlist. Select more to start listening!</h4>
   </div>
@@ -65,10 +70,11 @@ export default {
   text-align: center;
 }
 .empty {
-  background: #F2921D;
+  background: black;
   display: flex;
   justify-content: center;
   text-align: center;
+  color: pink;
 }
 .songs {
   margin-top: 20px;
@@ -129,5 +135,19 @@ button {
 }
 .auto {
   margin-left: auto;
+}
+.search {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 50%;
+}
+form {
+  display: table;
+  width: 100%;
+}
+i {
+  display: table-cell;
+  padding-left: 10px;
+  width: 1px;
 }
 </style>

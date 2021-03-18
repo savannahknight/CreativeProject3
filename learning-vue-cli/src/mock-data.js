@@ -215,8 +215,6 @@ let mock = [{
 	    genre: "Country",
       year: "2012",
 	    image: "cruise.jpg"
-
-
 	  },
 	  {
 	    id: 28,
@@ -241,8 +239,6 @@ let mock = [{
 	    genre: "Country",
 	    year: "2011",
 	    image: "barefoot.jpg"
-
-
 	  },
 	  {
 	    id: 31,
