@@ -25,7 +25,7 @@ export default {
     }
   },
   computed: {
-    products() {
+    songs() {
       return this.$root.$data.songs.filter(song => song.genre === this.genre);
     }
   },

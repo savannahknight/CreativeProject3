@@ -106,7 +106,7 @@ export default {
   justify-content: left;
 }
 .info {
-  background: #d73ff2;;
+  background: #d73ff2;
   padding: 10px 30px;
   height: 80px;
   width: 200px;

@@ -3,7 +3,7 @@
   <div class="wrapper">
     <div class="search">
       <form class="pure-form">
-        <i class="fa fa-search"></i><input v-model="searchText" />
+        <i class="fa fa-search"></i><input v-model="searchText" placeholder="Search for a Song by Title"/>
       </form>
     </div>
   </div>
@@ -58,5 +58,6 @@ input {
   box-shadow: none !important;
   width: 100%;
   height: 40px;
+  color:#d73ff2;
 }
 </style>

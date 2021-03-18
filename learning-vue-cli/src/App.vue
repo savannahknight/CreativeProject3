@@ -35,7 +35,7 @@ export default {
     calcQuantity(){
       let cartQuantity = 0;
       for(let i = 0; i < this.$root.$data.playlist.length; i++ ) {
-        cartQuantity += this.$root.$data.playlist[i].quantity;
+        cartQuantity += 1;
       }
       return cartQuantity;
     },
