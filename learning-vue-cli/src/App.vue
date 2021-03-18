@@ -3,19 +3,19 @@
     <div id="menu">
       <div id="brand">
         <router-link to="/">
-          <img src="require('/images/logo2.jpg')">
+          <img src="../images/logo2.jpg">
           </router-link>
       </div>
       <div id="side">
         <router-link to="/genre">
         <div class="menu-item genre">
-          <img src="/images/globe.png">
+          <img src="../images/globe.png">
           <p>Genre</p>
         </div>
       </router-link>
       <router-link to="/playlist">
         <div class="menu-item">
-          <img src="require('/images/music.png')">
+          <img src="../images/music.png">
           <p>{{calcQuantity}} items</p>
         </div>
       </router-link>

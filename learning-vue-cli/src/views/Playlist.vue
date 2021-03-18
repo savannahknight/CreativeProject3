@@ -20,7 +20,7 @@
         <p>{{song.genre}}</p>
       </div>
       <div class="image">
-        <img :src="'/images/songs/'+song.image">
+        <img :src="require('/images/'+song.image)">
       </div>
       <div class="year">
         <h2>{{song.year}}</h2>
