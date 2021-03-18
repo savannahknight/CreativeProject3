@@ -5,7 +5,7 @@
   <h1>Your Playlist</h1>
   <div class="search">
     <form class="pure-form">
-      <i class="fa fa-search"></i><input v-model="searchText" />
+      <i class="fa fa-search"></i><input v-model="searchText" placeholder="Search Here"/>
     </form>
   </div>
   </div>
@@ -68,13 +68,20 @@ export default {
 
 <style scoped>
 .wrapper {
+  display:flex;
+  flex-direction: column;
+  align-content: center;
+  width: 100%;
 }
 .heading {
   display: flex;
-  align-times: center;
+  align-content: center;
   justify-content: center;
+  flex-direction: column;
   text-align: center;
   color: #3fcef2;
+  width: 100%;
+  
 }
 .empty {
   background: inherit;
@@ -164,5 +171,16 @@ i {
 .fa-play{
   color: green;
   font-size: 25px;
+}
+input {
+  width: 100%;
+  color:#d73ff2;
+  margin-left: auto;
+  margin-right: auto;
+}
+.search {
+  display: flex;
+  text-align: center;
+  justify-content: center;
 }
 </style>
