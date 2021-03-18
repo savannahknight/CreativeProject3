@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    select(genre) {	
+    select(genre) {
       this.genre = genre;
     }
   }
