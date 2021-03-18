@@ -69,10 +69,8 @@ let mock = [{
 	    name: "Single Ladies",
 	    artist: 'Beyonce',
 	    genre: "R&B",
-      year: '2008'.
+        year: '2008',
 	    image: "single-ladies.png"
-
-
 	  },
 	  {
 	    id: 10,
@@ -239,9 +237,9 @@ let mock = [{
 	  {
 	    id: 30,
 	    name: "Barefoot Blue Jean Night",
-	    artist: “Jake Owen",
-	genre: "Country",
-year: “2011”,
+	    artist: "Jake Owen",
+	    genre: "Country",
+	    year: "2011",
 	    image: "barefoot.jpg"
 
 
@@ -378,7 +376,7 @@ year: “2011”,
 	    id: 47,
 	    name: "Listerine",
 	    artist: "Dayglow",
- 	    genre: "Indie",
+	    genre: "Indie",
       year: "2018",
 	    image: 'listerine.jpg'
 	  },

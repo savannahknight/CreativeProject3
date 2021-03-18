@@ -24,8 +24,8 @@ export default {
     }
   },
   computed: {
-    products() {
-      return this.$root.$data.products.filter(product => product.name.toLowerCase().search(this.searchText.toLowerCase()) >= 0);
+    songs() {
+      return this.$root.$data.songs.filter(song => song.name.toLowerCase().search(this.searchText.toLowerCase()) >= 0);
     }
   },
 }

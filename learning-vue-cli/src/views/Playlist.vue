@@ -2,24 +2,25 @@
 
 <div class="wrapper">
   <div class="heading">
-  <h1>Your Cart</h1>
+  <h1>Your Playlist</h1>
   </div>
   <div class="empty">
-  <h4 v-show="this.$root.$data.cart.length === 0">There are no items in your cart.</h4>
+  <h4 v-show="this.$root.$data.playlist.length === 0">There are no songs in your playlist. Select more to start listening!</h4>
   </div>
-  <div class="products">
-    <div class="product" v-for="product in this.$root.$data.cart" :key="product.id">
+  <div class="songs">
+    <div class="song" v-for="song in this.$root.$data.playlist" :key="song.id">
       <div class="info">
-        <h1>{{product.name}}</h1>
-        <p>{{product.country}}</p>
+        <h1>{{song.name}}</h1>
+        <h2>{{song.artist}}</h2>
+        <p>{{song.genre}}</p>
       </div>
       <div class="image">
-        <img :src="'/images/products/'+product.image">
+        <img :src="'/images/songs/'+song.image">
       </div>
-      <div class="price">
-        <h2>{{product.price}}</h2>
-        <p class="quantity">Quantity: {{product.quantity}}</p>
-        <button class="auto" @click="removeItem(product.id)">Remove Item</button>
+      <div class="year">
+        <h2>{{song.year}}</h2>
+        <p class="quantity">Listened to {{song.quantity}} times</p>
+        <button class="auto" @click="removeItem(song.id)">Remove Song</button>
       </div>
       <hr size="8" width="100%" color="black">
     </div>
@@ -29,24 +30,24 @@
 
 <script>
 export default {
-  name: 'Cart',
+  name: 'Playlist',
   data() {
     return {
     }
   },
   computed: {
-    cart() {
-      return this.$root.$data.cart;
+    playlist() {
+      return this.$root.$data.playlist;
     }
   },
   methods: {
     removeItem(id) {
-      let item = this.$root.$data.cart.find(item => item.id === id);
-      const index = this.$root.$data.cart.indexOf(item);
+      let item = this.$root.$data.playlist.find(item => item.id === id);
+      const index = this.$root.$data.playlist.indexOf(item);
       if(index > -1) {
-        this.$root.$data.cart[index].quantity -= 1;
-        if(this.$root.$data.cart[index].quantity === 0) {
-          this.$root.$data.cart.splice(index, 1);
+        this.$root.$data.playlist[index].quantity -= 1;
+        if(this.$root.$data.playlist[index].quantity === 0) {
+          this.$root.$data.playlist.splice(index, 1);
         }
       }
     }
@@ -69,21 +70,21 @@ export default {
   justify-content: center;
   text-align: center;
 }
-.products {
+.songs {
   margin-top: 20px;
 }
-.product {
+.song {
   margin: 10px;
   margin-top: 50px;
   width: 100%;
 }
-.product img {
+.song img {
   border: 2px solid #333;
   height: 250px;
   width: 200px;
   object-fit: cover;
 }
-.product .image {
+.song .image {
   display: flex;
   justify-content: center;
   margin-bottom: 5px;
@@ -114,7 +115,7 @@ export default {
   margin-left: 20px;
   flex-wrap: wrap;
 }
-.price {
+.year {
   display: flex;
 }
 button {

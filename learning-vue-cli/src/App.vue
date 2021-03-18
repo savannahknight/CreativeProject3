@@ -3,27 +3,27 @@
     <div id="menu">
       <div id="brand">
         <router-link to="/">
-          <img src="/images/logo.png">
+          <img src="/images/logo2.jpg">
           </router-link>
       </div>
       <div id="side">
-        <router-link to="/browse">
-        <div class="menu-item browse">
+        <router-link to="/playlist">
+        <div class="menu-item playlist">
           <img src="/images/globe.png">
           <p>Browse</p>
         </div>
       </router-link>
       <router-link to="/cart">
         <div class="menu-item">
-          <img src="/images/love.png">
+          <img src="/images/music.png">
           <p>{{calcQuantity}} items</p>
         </div>
       </router-link>
     </div>
   </div>
   <router-view />
+    <div class="footer">
       <a href="https://github.com/savannahknight/CreativeProject3.git">Git Repository</a>
-      </div>
     </div>
   </div>
 </template>
@@ -34,8 +34,8 @@ export default {
   computed: {
     calcQuantity(){
       let cartQuantity = 0;
-      for(let i = 0; i < this.$root.$data.cart.length; i++ ) {
-        cartQuantity += this.$root.$data.cart[i].quantity;
+      for(let i = 0; i < this.$root.$data.playlist.length; i++ ) {
+        cartQuantity += this.$root.$data.playlist[i].quantity;
       }
       return cartQuantity;
     },

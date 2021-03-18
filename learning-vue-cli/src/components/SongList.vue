@@ -8,11 +8,11 @@
         <p>{{song.genre}}</p>
       </div>
       <div class="image">
-        <img :src="'/images/songs/'+song.image">
+        <img :src= "require('/images/'+song.image)" width=200px>
       </div>
       <div class="year">
         <h2>{{song.year}}</h2>
-        <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist)">Add to Cart</button>
+        <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist)">Add to Playlist</button>
       </div>
     </div>
   </div>
@@ -85,26 +85,3 @@ export default {
   padding: 10px 30px;
   height: 80px;
 }
-.info h1 {
-  font-size: 16px;
-}
-.info h2 {
-  font-size: 14px;
-}
-.info p {
-  margin: 0px;
-  font-size: 10px;
-}
-.year {
-  display: flex;
-}
-button {
-  height: 50px;
-  background: #000;
-  color: white;
-  border: none;
-}
-.auto {
-  margin-left: auto;
-}
-</style>
