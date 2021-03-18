@@ -3,12 +3,13 @@
 <div class="wrapper">
   <div class="heading">
   <h1>Your Playlist</h1>
-  </div>
   <div class="search">
     <form class="pure-form">
-      <i class="fas fa-search"></i><input v-model="searchText" />
+      <i class="fa fa-search"></i><input v-model="searchText" />
     </form>
   </div>
+  </div>
+
   <div class="empty">
   <h4 v-show="this.$root.$data.playlist.length === 0">There are no songs in your playlist. Select more to start listening!</h4>
   </div>
@@ -17,13 +18,14 @@
       <div class="info">
         <h1>{{song.name}}</h1>
         <h2>{{song.artist}}</h2>
-        <p>{{song.genre}}</p>
+        <p>{{song.year}}</p>
       </div>
       <div class="image">
         <img :src="require('/images/'+song.image)">
       </div>
-      <div class="year">
-        <h2>{{song.year}}</h2>
+      <div class="genre">
+        <h2>{{song.genre}}</h2>
+        <i class="fa fa-play"></i>
         <p class="quantity">Listened to {{song.quantity}} times</p>
         <button class="auto" @click="removeItem(song.id)">Remove Song</button>
       </div>
@@ -38,11 +40,15 @@ export default {
   name: 'Playlist',
   data() {
     return {
+      searchText: '',
     }
   },
   computed: {
     playlist() {
       return this.$root.$data.playlist;
+    },
+    songs() {
+      return this.$root.$data.songs.filter(song => song.name.toLowerCase().search(this.searchText.toLowerCase()) >= 0);
     }
   },
   methods: {
@@ -68,21 +74,24 @@ export default {
   align-times: center;
   justify-content: center;
   text-align: center;
+  color: #3fcef2;
 }
 .empty {
-  background: black;
+  background: inherit;
   display: flex;
   justify-content: center;
   text-align: center;
-  color: pink;
+  color: #3fcef2;
 }
 .songs {
   margin-top: 20px;
+  color: white;
 }
 .song {
   margin: 10px;
   margin-top: 50px;
   width: 100%;
+  background: #d73ff2;
 }
 .song img {
   border: 2px solid #333;
@@ -97,21 +106,23 @@ export default {
   justify-content: left;
 }
 .info {
-  background: #5a9157;
-  color: #000;
+  background: #d73ff2;;
   padding: 10px 30px;
   height: 80px;
   width: 200px;
 }
 .info h1 {
   font-size: 16px;
+  background: inherit;
 }
 .info h2 {
   font-size: 14px;
+  background: inherit;
 }
 .info p {
   margin: 0px;
   font-size: 10px;
+  background: inherit;
 }
 .quantity {
   display: flex;
@@ -121,7 +132,7 @@ export default {
   margin-left: 20px;
   flex-wrap: wrap;
 }
-.year {
+.genre {
   display: flex;
 }
 button {
@@ -149,5 +160,9 @@ i {
   display: table-cell;
   padding-left: 10px;
   width: 1px;
+}
+.fa-play{
+  color: green;
+  font-size: 25px;
 }
 </style>

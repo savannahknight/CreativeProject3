@@ -16,7 +16,7 @@
       <router-link to="/playlist">
         <div class="menu-item">
           <img src="../images/music.png">
-          <p>{{calcQuantity}} items</p>
+          <p>{{calcQuantity}} Songs In Your Playlist</p>
         </div>
       </router-link>
     </div>
@@ -45,6 +45,8 @@ export default {
 <style>
 * {
   box-sizing: border-box;
+  background: black;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 body {
   margin: 50px 100px;
@@ -79,6 +81,7 @@ body {
 .menu-item {
   display: flex;
   flex-direction: column;
+  color: #d73ff2;
 }
 .menu-item p {
   margin: 0px;
@@ -92,7 +95,6 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  color: black;
   height: 40px;
   text-align: center;
   padding: 10px;
@@ -101,7 +103,7 @@ body {
   color: white;
 }
 a, a:hover, a:focus {
-  color: pink;
+  color: #3fcef2;
   text-decoration: none;
   transition: all 0.3s;
 }
