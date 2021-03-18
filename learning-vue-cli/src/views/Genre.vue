@@ -8,14 +8,14 @@
       <li class="pure-menu-item"><a @click="select('Brazil')" href="#" class="pure-menu-link">Brazil</a></li>
     </ul>
   </div>
-  <SongList :products="products" />
+  <SongList :songs="songs" />
 </div>
 </template>
 
 <script>
 import SongList from "../components/SongList.vue"
 export default {
-  name: 'Browse',
+  name: 'Genre',
   components: {
     SongList
   },
@@ -26,12 +26,12 @@ export default {
   },
   computed: {
     products() {
-      return this.$root.$data.products.filter(product => product.genre === this.genre);
+      return this.$root.$data.songs.filter(song => song.genre === this.genre);
     }
   },
   methods: {
-    select(country) {
-      this.country = country;
+    select(genre) {
+      this.genre = genre;
     }
   }
 }

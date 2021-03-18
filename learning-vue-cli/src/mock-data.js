@@ -59,7 +59,7 @@ let mock = [{
 	  {
 	    id: 8,
 	    name: "Body Like a Back Road",
-	    artist: 'Same Hunt',
+	    artist: 'Sam Hunt',
 	    genre: "Country",
       year: '2020',
 	    image: "back-road.jpg"

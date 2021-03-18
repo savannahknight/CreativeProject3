@@ -3,19 +3,20 @@
     <div id="menu">
       <div id="brand">
         <router-link to="/">
-          <img src="/images/logo2.jpg">
+          <img src="../images/logo2.jpg">
+          
           </router-link>
       </div>
       <div id="side">
         <router-link to="/playlist">
         <div class="menu-item playlist">
-          <img src="/images/globe.png">
+          <img src="../images/globe.png">
           <p>Browse</p>
         </div>
       </router-link>
       <router-link to="/cart">
         <div class="menu-item">
-          <img src="/images/music.png">
+          <img src="../images/music.png">
           <p>{{calcQuantity}} items</p>
         </div>
       </router-link>

@@ -36,7 +36,7 @@ export default {
         }
       });
       if (!found) {
-        this.$root.$data.cart.push({
+        this.$root.$data.playlist.push({
           id: id,
           quantity: 1,
           name: name,
