@@ -9,14 +9,14 @@
       <div id="side">
         <router-link to="/genre">
         <div class="menu-item genre">
-          <img src="../images/globe.png">
+          <i class="fa fa-globe fa-2x"></i>
           <p>Genre</p>
         </div>
       </router-link>
       <router-link to="/playlist">
         <div class="menu-item">
-          <img src="../images/music.png">
-          <p>{{calcQuantity}} Songs In Your Playlist</p>
+          <i class="fa fa-music fa-2x"></i>
+          <p>{{calcQuantity}} Songs In Playlist</p>
         </div>
       </router-link>
     </div>
@@ -33,11 +33,7 @@ export default {
   name: 'App',
   computed: {
     calcQuantity(){
-      let cartQuantity = 0;
-      for(let i = 0; i < this.$root.$data.playlist.length; i++ ) {
-        cartQuantity += this.$root.$data.playlist[i].quantity;
-      }
-      return cartQuantity;
+      return this.$root.$data.playlist.length;
     },
   },
 }
@@ -73,7 +69,8 @@ body {
   grid-area: side;
   display: flex;
   justify-content: flex-end;
-  color: pink;
+  color: #3fcef2;
+  margin-left: 20px;
 }
 #side img {
   width: 50px;
@@ -81,12 +78,12 @@ body {
 .menu-item {
   display: flex;
   flex-direction: column;
-  color: #d73ff2;
+  color: #3fcef2;
 }
 .menu-item p {
-  margin: 0px;
+  margin: 0;
 }
-.browse {
+.genre {
   margin-right: 50px;
 }
 .footer {
@@ -106,5 +103,9 @@ a, a:hover, a:focus {
   color: #3fcef2;
   text-decoration: none;
   transition: all 0.3s;
+}
+.fa {
+  color: #3fcef2;
+  align-items: flex-end;
 }
 </style>

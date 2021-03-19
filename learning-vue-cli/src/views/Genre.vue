@@ -2,10 +2,10 @@
 <div>
   <div class="pure-menu pure-menu-horizontal">
     <ul class="pure-menu-list">
-      <li class="pure-menu-item"><a @click="select('United States')" href="#" class="pure-menu-link">United States</a></li>
-      <li class="pure-menu-item"><a @click="select('Canada')" href="#" class="pure-menu-link">Canada</a></li>
-      <li class="pure-menu-item"><a @click="select('Mexico')" href="#" class="pure-menu-link">Mexico</a></li>
-      <li class="pure-menu-item"><a @click="select('Brazil')" href="#" class="pure-menu-link">Brazil</a></li>
+      <li class="pure-menu-item"><a @click="select('Country')" href="#" class="pure-menu-link">Country</a></li>
+      <li class="pure-menu-item"><a @click="select('Indie')" href="#" class="pure-menu-link">Indie</a></li>
+      <li class="pure-menu-item"><a @click="select('Pop')" href="#" class="pure-menu-link">Pop</a></li>
+      <li class="pure-menu-item"><a @click="select('R&B')" href="#" class="pure-menu-link">R&B</a></li>
     </ul>
   </div>
   <SongList :songs="songs" />
@@ -21,11 +21,11 @@ export default {
   },
   data() {
     return {
-      country: '',
+      genre: '',
     }
   },
   computed: {
-    products() {
+    songs() {
       return this.$root.$data.songs.filter(song => song.genre === this.genre);
     }
   },
@@ -36,3 +36,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.pure-menu-list li{
+  display: inline;
+}
+.pure-menu-item {
+  padding: 20px;
+}
+
+</style>

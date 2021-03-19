@@ -12,7 +12,7 @@
       </div>
       <div class="genre">
         <h2>{{song.genre}}</h2>
-        <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist)">Add to Playlist</button>
+        <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button>
       </div>
     </div>
   </div>
@@ -26,11 +26,10 @@ export default {
     songs: Array
   },
   methods: {
-    addItem(id, name, image, year, artist){
+    addItem(id, name, image, year, artist, genre){
       let found = false;
       this.$root.$data.playlist.find((song) => {
         if (song.id === id) {
-          song.quantity += 1;
           found = true;
           return true;
         }
@@ -38,14 +37,13 @@ export default {
       if (!found) {
         this.$root.$data.playlist.push({
           id: id,
-          quantity: 1,
           name: name,
           image: image,
           year: year,
-          artist: artist
+          artist: artist,
+          genre: genre
         });
       }
-      this.$root.$data.calcQuantity += 1;
     },
   }
 }
@@ -112,7 +110,7 @@ export default {
   background: inherit;
 }
 .info p {
-  margin: 0px;
+  margin-left: 0px;
   font-size: 10px;
   background: inherit;
   justify-content: right;

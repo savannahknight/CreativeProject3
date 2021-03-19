@@ -3,7 +3,7 @@
   <div class="wrapper">
     <div class="search">
       <form class="pure-form">
-        <i class="fa fa-search"></i><input v-model="searchText" />
+        <i class="fa fa-search"></i><input v-model="searchText" placeholder="Search by Title"/>
       </form>
     </div>
   </div>
@@ -40,7 +40,8 @@ export default {
 .search {
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 50%;
+  width: 100%;
+  color: #d73ff2;
 }
 form {
   display: table;
@@ -58,5 +59,9 @@ input {
   box-shadow: none !important;
   width: 100%;
   height: 40px;
+  color: white;
+}
+.fa-search {
+  font-color: #d73ff2;
 }
 </style>

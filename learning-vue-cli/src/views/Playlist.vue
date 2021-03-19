@@ -3,13 +3,13 @@
 <div class="wrapper">
   <div class="heading">
   <h1>Your Playlist</h1>
+
   <div class="search">
     <form class="pure-form">
-      <i class="fa fa-search"></i><input v-model="searchText" />
+      <i class="fa fa-search"></i><input v-model="searchText" placeholder="Search by title"/>
     </form>
   </div>
   </div>
-
   <div class="empty">
   <h4 v-show="this.$root.$data.playlist.length === 0">There are no songs in your playlist. Select more to start listening!</h4>
   </div>
@@ -25,11 +25,10 @@
       </div>
       <div class="genre">
         <h2>{{song.genre}}</h2>
-        <i class="fa fa-play"></i>
-        <p class="quantity">Listened to {{song.quantity}} times</p>
+        <button class="play" @click="playSong(song.id)"><i class="fa fa-play"></i></button>
+        <p class="quantity">Listened to {{timesPlayed(song)}} times</p>
         <button class="auto" @click="removeItem(song.id)">Remove Song</button>
       </div>
-      <hr size="8" width="100%" color="black">
     </div>
   </div>
 </div>
@@ -49,32 +48,63 @@ export default {
     },
     songs() {
       return this.$root.$data.songs.filter(song => song.name.toLowerCase().search(this.searchText.toLowerCase()) >= 0);
-    }
+    },
+
   },
   methods: {
+  timesPlayed(song) {
+    if (song.amountPlayed === undefined) {
+      return 0;
+    }
+    else {
+      return song.amountPlayed;
+    }
+  },
+    playSong(id) {
+
+        this.$root.$data.playlist.find((song) => {
+          let amountPlayed = 0;
+          if (song.id === id) {
+            if(song.amountPlayed === undefined) {
+              song.amountPlayed = 1;
+            }
+            else {
+              song.amountPlayed += 1;
+            }
+            this.$forceUpdate();
+            return song.amountPlayed;
+        }
+      });
+    },
     removeItem(id) {
       let item = this.$root.$data.playlist.find(item => item.id === id);
       const index = this.$root.$data.playlist.indexOf(item);
-      if(index > -1) {
-        this.$root.$data.playlist[index].quantity -= 1;
-        if(this.$root.$data.playlist[index].quantity === 0) {
-          this.$root.$data.playlist.splice(index, 1);
-        }
-      }
+      this.$root.$data.playlist.splice(index, 1);
     }
   }
 }
 </script>
 
+
 <style scoped>
 .wrapper {
+  display:flex;
+  flex-direction: column;
+  align-content: center;
+  width: 100%;
 }
 .heading {
   display: flex;
-  align-times: center;
+  align-items: center;
   justify-content: center;
   text-align: center;
   color: #3fcef2;
+  width: 100%;
+  flex-direction: column;
+  align-content: center;
+}
+.heading h1 {
+  margin-bottom: 30px;
 }
 .empty {
   background: inherit;
@@ -82,6 +112,7 @@ export default {
   justify-content: center;
   text-align: center;
   color: #3fcef2;
+  margin-top: 40px;
 }
 .songs {
   margin-top: 20px;
@@ -106,7 +137,7 @@ export default {
   justify-content: left;
 }
 .info {
-  background: #d73ff2;;
+  background: #d73ff2;
   padding: 10px 30px;
   height: 80px;
   width: 200px;
@@ -131,6 +162,7 @@ export default {
   padding: 6px;
   margin-left: 20px;
   flex-wrap: wrap;
+  background: inherit;
 }
 .genre {
   display: flex;
@@ -150,7 +182,10 @@ button {
 .search {
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 50%;
+  text-align: center;
+  justify-content: center;
+  color: #3fcef2;
+  display: flex;
 }
 form {
   display: table;
@@ -161,8 +196,21 @@ i {
   padding-left: 10px;
   width: 1px;
 }
+input {
+  width: 100%;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  border: none !important;
+  box-shadow: none !important;
+
+}
 .fa-play{
   color: green;
   font-size: 25px;
+  background: inherit;
+}
+.play {
+  background: inherit;
 }
 </style>
