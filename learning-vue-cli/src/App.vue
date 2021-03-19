@@ -16,7 +16,7 @@
       <router-link to="/playlist">
         <div class="menu-item">
           <i class="fa fa-music fa-2x"></i>
-          <p>{{calcQuantity}} Songs In Playlist</p>
+          <p>Playlist</p>
         </div>
       </router-link>
     </div>
@@ -32,9 +32,7 @@
 export default {
   name: 'App',
   computed: {
-    calcQuantity(){
-      return this.$root.$data.playlist.length;
-    },
+    
   },
 }
 </script>

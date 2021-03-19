@@ -40,7 +40,7 @@ export default {
 .search {
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 100%;
+  width: 50%;
   color: #d73ff2;
 }
 form {

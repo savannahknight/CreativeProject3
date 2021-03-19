@@ -10,11 +10,16 @@
     </form>
   </div>
   </div>
+  <div>
+  <p class="amount">{{calcQuantity}} Songs In Your Playlist</p>
+  </div>
   <div class="empty">
   <h4 v-show="this.$root.$data.playlist.length === 0">There are no songs in your playlist. Select more to start listening!</h4>
   </div>
+
   <div class="songs">
-    <div class="song" v-for="song in this.$root.$data.playlist" :key="song.id">
+    <div class="container" v-for="song in this.$root.$data.playlist" :key="song.id">
+      <div class="song">
       <div class="info">
         <h1>{{song.name}}</h1>
         <h2>{{song.artist}}</h2>
@@ -25,9 +30,12 @@
       </div>
       <div class="genre">
         <h2>{{song.genre}}</h2>
+        <br>
         <button class="play" @click="playSong(song.id)"><i class="fa fa-play"></i></button>
+        <br>
         <p class="quantity">Listened to {{timesPlayed(song)}} times</p>
         <button class="auto" @click="removeItem(song.id)">Remove Song</button>
+      </div>
       </div>
     </div>
   </div>
@@ -43,6 +51,9 @@ export default {
     }
   },
   computed: {
+    calcQuantity(){
+      return this.$root.$data.playlist.length;
+    },
     playlist() {
       return this.$root.$data.playlist;
     },
@@ -61,9 +72,9 @@ export default {
     }
   },
     playSong(id) {
-
+      /*eslint-disable no-unused-vars*/
+        let amountPlayed = 0;
         this.$root.$data.playlist.find((song) => {
-          let amountPlayed = 0;
           if (song.id === id) {
             if(song.amountPlayed === undefined) {
               song.amountPlayed = 1;
@@ -74,7 +85,9 @@ export default {
             this.$forceUpdate();
             return song.amountPlayed;
         }
+
       });
+      /* eslint-enable no-unused-vars */
     },
     removeItem(id) {
       let item = this.$root.$data.playlist.find(item => item.id === id);
@@ -87,6 +100,9 @@ export default {
 
 
 <style scoped>
+.contaienr {
+  width: 100%;
+}
 .wrapper {
   display:flex;
   flex-direction: column;
@@ -122,13 +138,13 @@ export default {
 .song {
   margin: 10px;
   margin-top: 50px;
-  width: 100%;
+  width: 250px;
   background: #d73ff2;
 }
 .song img {
   border: 2px solid #333;
   height: 250px;
-  width: 200px;
+  width: 250px;
   object-fit: cover;
 }
 .song .image {
@@ -160,13 +176,12 @@ export default {
   display: flex;
   font-weight: bold;
   font-size: 18px;
-  padding: 6px;
   margin-left: 20px;
   flex-wrap: wrap;
   background: inherit;
 }
 .genre {
-  display: flex;
+  display: inline;
 }
 button {
   height: 50px;
@@ -187,6 +202,10 @@ button {
   justify-content: center;
   color: #3fcef2;
   display: flex;
+}
+.amount {
+  margin-top: 15px;
+  color: #3fcef2;
 }
 form {
   display: table;
