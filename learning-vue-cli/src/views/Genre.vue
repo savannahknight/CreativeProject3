@@ -40,9 +40,30 @@ export default {
 <style scoped>
 .pure-menu-list li{
   display: inline;
+  margin-left: 65px;
 }
 .pure-menu-item {
-  padding: 20px;
+  padding-right: 0;
+  padding-left: 50px;
 }
-
+@media only screen and (min-width : 150px) and (max-width: 499px) {
+  .pure-menu-list li{
+    display: inline;
+    margin-left: 0;
+  }
+  .pure-menu-item {
+    padding: 20px;
+    padding-left: 0;
+  }
+}
+@media only screen and (min-width : 500px) and (max-width: 900px) {
+  .pure-menu-list li{
+    display: inline;
+    margin-left: 0;
+  }
+  .pure-menu-item {
+    padding: 50px;
+    padding-left: 40px;
+  }
+}
 </style>

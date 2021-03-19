@@ -30,9 +30,7 @@
       </div>
       <div class="genre">
         <h2>{{song.genre}}</h2>
-        <br>
         <button class="play" @click="playSong(song.id)"><i class="fa fa-play"></i></button>
-        <br>
         <p class="quantity">Listened to {{timesPlayed(song)}} times</p>
         <button class="auto" @click="removeItem(song.id)">Remove Song</button>
       </div>
@@ -194,6 +192,9 @@ button {
 }
 .auto {
   margin-left: auto;
+}
+.play {
+  margin: 0;
 }
 .search {
   border: 1px solid #ccc;
