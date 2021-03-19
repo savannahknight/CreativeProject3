@@ -97,6 +97,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   text-align: center;
   color: #3fcef2;
   width: 100%;
@@ -212,5 +213,16 @@ input {
 }
 .play {
   background: inherit;
+}
+input {
+  width: 100%;
+  color:#d73ff2;
+  margin-left: auto;
+  margin-right: auto;
+}
+.search {
+  display: flex;
+  text-align: center;
+  justify-content: center;
 }
 </style>

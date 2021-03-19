@@ -106,11 +106,11 @@ export default {
   font-size: 20px;
 }
 .info h2 {
-  font-size: 16px;
+  font-size: 14px;
   background: inherit;
 }
 .info p {
-  margin-left: 0px;
+  margin: 0px;
   font-size: 10px;
   background: inherit;
   justify-content: right;
