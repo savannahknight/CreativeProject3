@@ -19,6 +19,12 @@
           <p>Playlist</p>
         </div>
       </router-link>
+      <router-link to="/profile">
+        <div class="menu-item">
+          <i class="fa fa-music fa-2x"></i>
+          <p>Profile</p>
+        </div>
+      </router-link>
     </div>
   </div>
   <router-view />

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Genre from '../views/Genre.vue'
 import Playlist from '../views/Playlist.vue'
+import Profile from '../views/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/playlist',
     name: 'Playlist',
     component: Playlist
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
   },
 ]
 
