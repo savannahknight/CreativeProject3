@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="heading">
 <h1>Login To Start Listening</h1>
   <form @submit.prevent="login">
       <p>Username:</p>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'Login',
   data() {
@@ -34,7 +35,7 @@ export default {
 <style scoped>
 form {
   border: 1px solid #ccc;
-  background-color: #eee;
+  background-color: white;
   border-radius: 4px;
   padding: 20px;
 }
@@ -43,5 +44,22 @@ form {
 }
 .login-button {
   margin-left: auto;
+}
+input {
+  width: 100%;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  color: #3fcef2;
+  width: 100%;
+  flex-direction: column;
+  align-content: center;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="container">
     <div class="main-body">
-    
+
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
@@ -69,7 +69,7 @@
                     </div>
                   </div>
                   <hr>
-                  
+
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
@@ -101,8 +101,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+import playlist from "../components/Playlist.vue";
 export default {
   name: 'Profile',
+  components: {
+    Playlist
+  },
   data() {
     return {
       searchText: '',
@@ -116,7 +121,7 @@ body{
     margin-top:20px;
     color: #1a202c;
     text-align: left;
-    background-color: #e2e8f0;    
+    background-color: #e2e8f0;
 }
 .main-body {
     padding: 15px;
