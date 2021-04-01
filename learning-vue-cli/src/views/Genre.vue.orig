@@ -42,6 +42,7 @@ export default {
   display: inline;
   margin-left: 65px;
 }
+
 .pure-menu-item {
   padding-right: 0;
   padding-left: 50px;
@@ -66,4 +67,9 @@ export default {
     padding-left: 40px;
   }
 }
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 495f957fb9dbb60c39ac80330a2105e27fe3a380
 </style>

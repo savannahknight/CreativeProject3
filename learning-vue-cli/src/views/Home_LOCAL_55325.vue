@@ -64,7 +64,6 @@ input {
 .fa-search {
   font-color: #d73ff2;
 }
-<<<<<<< HEAD
 @media only screen and (min-width : 150px) and (max-width : 780px)
 {
     .search
@@ -73,12 +72,5 @@ input {
         margin: 0 auto;
     }
 
-=======
-@media only screen and (min-width : 150px) and (max-width: 780px) {
-  .search {
-    width: 95%;
-    margin: 0 auto;
-  }
->>>>>>> 495f957fb9dbb60c39ac80330a2105e27fe3a380
 }
 </style>
