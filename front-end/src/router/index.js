@@ -3,12 +3,13 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Genre from '../views/Genre.vue'
 import Playlist from '../views/Playlist.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
   },
@@ -21,6 +22,11 @@ const routes = [
     path: '/playlist',
     name: 'Playlist',
     component: Playlist
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
 ]
 

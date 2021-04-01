@@ -2,7 +2,7 @@
   <div id="app">
     <div id="menu">
       <div id="brand">
-        <router-link to="/">
+        <router-link to="/login">
           <img src="../images/logo2.jpg">
           </router-link>
       </div>
@@ -19,6 +19,12 @@
           <p>Playlist</p>
         </div>
       </router-link>
+      <router-link to="/home">
+        <div class="menu-item">
+          <p>Home</p>
+        </div>
+      </router-link>
+
     </div>
   </div>
   <router-view />
@@ -32,7 +38,7 @@
 export default {
   name: 'App',
   computed: {
-    
+
   },
 }
 </script>
