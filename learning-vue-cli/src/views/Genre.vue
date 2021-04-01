@@ -41,8 +41,10 @@ export default {
 .pure-menu-list li{
   display: inline;
 }
+
 .pure-menu-item {
   padding: 20px;
 }
+
 
 </style>
