@@ -19,17 +19,21 @@
           <p>Playlist</p>
         </div>
       </router-link>
+<<<<<<< HEAD
       <router-link to="/profile">
         <div class="menu-item">
           <i class="fa fa-music fa-2x"></i>
           <p>Profile</p>
         </div>
       </router-link>
+=======
       <router-link to="/home">
         <div class="menu-item">
           <p>Home</p>
         </div>
       </router-link>
+
+>>>>>>> c2f85e1cb266cba6d121a5703b1f2099edcd7bca
     </div>
   </div>
   <router-view />
