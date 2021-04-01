@@ -13,12 +13,6 @@
           <p>Genre</p>
         </div>
       </router-link>
-      <router-link to="/playlist">
-        <div class="menu-item">
-          <i class="fa fa-music fa-2x"></i>
-          <p>Playlist</p>
-        </div>
-      </router-link>
       <router-link to="/profile">
         <div class="menu-item">
           <i class="fa fa-music fa-2x"></i>

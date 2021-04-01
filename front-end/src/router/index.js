@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Genre from '../views/Genre.vue'
-import Playlist from '../views/Playlist.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 
@@ -18,11 +17,6 @@ const routes = [
     path: '/genre',
     name: 'Genre',
     component: Genre
-  },
-  {
-    path: '/playlist',
-    name: 'Playlist',
-    component: Playlist
   },
   {
     path: '/profile',
