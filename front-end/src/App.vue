@@ -21,7 +21,13 @@
       </router-link>
       <router-link to="/home">
         <div class="menu-item">
-          <p>Home</p>
+          <p>Browse</p>
+        </div>
+      </router-link>
+      <router-link to="/playlist">
+        <div class="menu-item">
+          <i class="fa fa-music fa-2x"></i>
+          <p>Playlist</p>
         </div>
       </router-link>
     </div>

@@ -5,7 +5,8 @@ import mock from './mock-data.js'
 
 let data = {
   songs: mock,
-  playlist: []
+  playlist: [],
+  id: "",
 }
 Vue.config.productionTip = false
 

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Genre from '../views/Genre.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
+import Playlist from '../views/Playlist.vue'
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,7 @@ const routes = [
     component: Genre
   },
   {
-    path: '/profile',
+    path: '/profile/:id',
     name: 'Profile',
     component: Profile
   },
@@ -27,6 +28,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/playlist',
+    name: 'Playlist',
+    component: Playlist
   },
 ]
 

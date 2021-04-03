@@ -30,7 +30,7 @@ const User = mongoose.model('User', userSchema);
 
 app.post('/api/users', async (req, res) => {
   const user = new User({
-    username: req.body.name,
+    username: req.body.username,
   });
   try {
     await user.save();
@@ -69,32 +69,75 @@ const playlistSchema = new mongoose.Schema ({
     ref: 'User'
   },
   //path to the song from SongList.vue
-  song: String,
+  name: String,
+  image: String,
+  year: String,
+  artist: String,
+  genre: String,
 });
 
-const Playlist = mongoose.model('Plyalist', playlistSchema);
-
+const Playlist = mongoose.model('Playlist', playlistSchema);
 app.post('/api/users/:userID/songs', async (req, res) => {
     try {
-        let playlist = await Project.findOne({_id: req.params.userID});
-        if (!playlist) {
+        let user = await User.findOne({_id: req.params.userID});
+        if (!user) {
             res.send(404);
             return;
         }
-        let profile = new Profile({
+        let playlist = new Playlist({
             user: user,
-            fullName: req.body.fullName,
-            email: req.body.email,
-            phone: req.body.phone,
-            address: req.body.address,
-            path: req.body.path,
+            name: req.body.name,
+            image: req.body.image,
+            year: req.body.year,
+            artist: req.body.artist,
+            genre: req.body.genre,
         });
-        await item.save();
-        res.send(profile);
+        await playlist.save();
+        console.log(playlist);
+        res.send(playlist);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
     }
 });
+app.get('/api/users/:userID/songs', async (req, res) => {
+  try {
+    let user = await User.findOne({_id: req.params.userID});
+    if (!user) {
+        res.send(404);
+        return;
+    }
+    let playlist = await Playlist.find({
+      user: user
+    })
+    res.send(playlist);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+// app.post('/api/users/:userID/songs', async (req, res) => {
+//     try {
+//         let playlist = await Project.findOne({_id: req.params.userID});
+//         if (!playlist) {
+//             res.send(404);
+//             return;
+//         }
+//         let profile = new Profile({
+//             user: user,
+//             fullName: req.body.fullName,
+//             email: req.body.email,
+//             phone: req.body.phone,
+//             address: req.body.address,
+//             path: req.body.path,
+//         });
+//         await item.save();
+//         res.send(profile);
+//     } catch (error) {
+//         console.log(error);
+//         res.sendStatus(500);
+//     }
+// });
 
 app.listen(3000, () => console.log('Server listening on port 3000!'));

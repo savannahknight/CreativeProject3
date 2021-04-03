@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'Playlist',
   data() {
@@ -60,7 +61,27 @@ export default {
     },
 
   },
+  created: async function(){
+    try {
+      let response = await axios.get("/api/users/" + this.$root.$data.id + "/songs");
+      this.$root.$data.playlist = response.data;
+      return true;
+    }
+      catch (error) {
+        console.log(error);
+      }
+  },
   methods: {
+    async getUserPlaylist() {
+      try {
+        let response = await axios.get("/api/users/" + this.$root.$data.id + "/songs");
+        this.$root.$data.playlist = response.data;
+        return true;
+      }
+        catch (error) {
+          console.log(error);
+        }
+    },
   timesPlayed(song) {
     if (song.amountPlayed === undefined) {
       return 0;

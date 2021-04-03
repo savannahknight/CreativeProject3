@@ -13,6 +13,7 @@
       <div class="genre">
         <h2>{{song.genre}}</h2>
         <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button>
+        <!-- <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button> -->
       </div>
     </div>
   </div>
@@ -20,13 +21,15 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'SongList',
   props: {
     songs: Array
   },
   methods: {
-    addItem(id, name, image, year, artist, genre){
+    async addItem(id, name, image, year, artist, genre){
+
       let found = false;
       this.$root.$data.playlist.find((song) => {
         if (song.id === id) {
@@ -35,14 +38,19 @@ export default {
         }
       });
       if (!found) {
-        this.$root.$data.playlist.push({
-          id: id,
-          name: name,
-          image: image,
-          year: year,
-          artist: artist,
-          genre: genre
-        });
+        console.log("not found")
+        try {
+          await axios.post("/api/users/" + this.$root.$data.id + "/songs", {
+            name: name,
+            image: image,
+            year: year,
+            artist: artist,
+            genre: genre,
+          });
+        }
+          catch (error) {
+            console.log(error);
+          }
       }
     },
   }

@@ -97,17 +97,36 @@
             </div>
           </div>
         </div>
+        <!-- <div class="empty">
+        <h4 v-show="this.$root.$data.playlist.length === 0">There are no songs in your playlist. Select more to start listening!</h4>
+        </div>
+
+        <div class="songs">
+          <div class="container" v-for="song in this.$root.$data.playlist" :key="song.id">
+            <div class="song">
+            <div class="info">
+              <h1>{{song.name}}</h1>
+              <h2>{{song.artist}}</h2>
+              <p>{{song.year}}</p>
+            </div>
+            <div class="image">
+              <img :src="require('/images/'+song.image)">
+            </div>
+            <div class="genre">
+              <h2>{{song.genre}}</h2>
+              <button class="play" @click="playSong(song.id)"><i class="fa fa-play"></i></button>
+              <p class="quantity">Listened to {{timesPlayed(song)}} times</p>
+              <button class="auto" @click="removeItem(song.id)">Remove Song</button>
+            </div>
+            </div>
+          </div>
+        </div> -->
     </div>
 </template>
 
 <script>
-import axios from 'axios';
-import playlist from "../components/Playlist.vue";
 export default {
   name: 'Profile',
-  components: {
-    Playlist
-  },
   data() {
     return {
       searchText: '',
