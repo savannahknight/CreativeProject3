@@ -12,7 +12,7 @@
                       <h4>{{name}}</h4>
                       <p class="text-secondary mb-1">{{work}}</p>
                       <p class="text-muted font-size-sm">{{address}}</p>
-                      <button class="btn btn-primary">Follow</button>
+                      <button class="btn btn-primary">Edit</button>
                       <button class="btn btn-outline-primary">Message</button>
                     </div>
                   </div>
@@ -121,6 +121,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'Profile',
   data() {
@@ -131,7 +132,76 @@ export default {
       work: '',
       city: '',
       state: '',
+      image: '',
+      addInfo: null,
+      file: null,
+      findProfile: null,
+      findUser: "",
     }
+  },
+  created() {
+    this.getProfile();
+  },
+  methods: {
+    async getProfile() {
+      try {
+          let response = await axios.get("/api/profile");
+          this.profile = response.data;
+          return true;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      async createProfile() {
+      try {
+        const formData = new FormData();
+        formData.append('photo', this.file, this.file.name)
+        let r1 = await axios.post('/api/photos', formData);
+        let r2 = await axios.post('/api/profile', {
+          name: this.name,
+          email: this.email,
+          phone: this.phone,
+          work: this.work,
+          city: this.city,
+          state: this.state,
+          image: r1.data.image,
+        });
+        this.addInfo = r2.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async deleteUser() {
+      try {
+        let userArray = this.users.map(user=>user.username);
+        this.$root.$data.id = this.users[userArray.indexOf(this.username)]._id
+        await axios.delete("/api/users/" + this.$root.$data.id);
+        this.findUser = null;
+        this.getProfile();
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async editProfile() {
+      try {
+        await axios.put("/api/users/" + this.$root.$data.id, {
+          name: this.findUser.name,
+          email: this.findUser.email,
+          phone: this.findUser.phone,
+          work: this.findUser.work,
+          city: this.findUser.city,
+          state: this.findUser.state,
+          image: this.findUser.image,
+        });
+        this.findUser = null;
+        this.getProfile();
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
   },
   computed: {
     address() {

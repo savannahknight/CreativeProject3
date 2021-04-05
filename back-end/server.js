@@ -31,6 +31,13 @@ const User = mongoose.model('User', userSchema);
 app.post('/api/users', async (req, res) => {
   const user = new User({
     username: req.body.username,
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    work: req.body.work,
+    city: req.body.city,
+    state: req.body.state,
+    image: req.body.image,
   });
   try {
     await user.save();
@@ -54,14 +61,76 @@ const profileSchema = new mongoose.Schema ({
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
-  fullName: String,
+  image: String,
+  name: String,
   email: String,
   phone: String,
-  address: String,
-  path: String,
+  work: String,
+  city: String,
+  state: String,
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
+//create profile information
+app.post('/api/profile', async (req, res) => {
+  const profile = new Profile({
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    work: req.body.work,
+    city: req.body.city,
+    state: req.body.state,
+    image: req.body.image,
+  });
+  try {
+    await profile.save();
+    res.send(profile);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+//upload a profile picture
+app.post('/api/photos', upload.single('photo'), async (req, res) => {
+  if (!req.file) {
+    return res.sendStatus(400);
+  }
+  res.send({
+    path: "/images/" + req.file.filename
+  });
+});
+//Delete a users account
+app.delete('/api/users/:userID', async (req, res) =>{
+  try {
+    await User.deleteOne({
+      _id: req.params.id
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+//Edit profile info
+app.put('/api/users/:userID', async (req, res) => {
+  try {
+    let profile = await Profile.findOne({
+      _id: req.params.id
+    });
+    profile.name = req.body.name,
+    profile.email = req.body.email,
+    profile.phone = req.body.phone,
+    profile.work = req.body.work,
+    profile.city = req.body.city,
+    profile.state = req.body.state,
+    profile.image = req.body.image,
+    await profile.save();
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
 
 const playlistSchema = new mongoose.Schema ({
   user: {

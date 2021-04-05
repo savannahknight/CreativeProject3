@@ -2,7 +2,7 @@
   <div id="app">
     <div id="menu">
       <div id="brand">
-        <router-link to="/login">
+        <router-link to="/">
           <img src="../images/logo2.jpg">
           </router-link>
       </div>
@@ -13,7 +13,7 @@
           <p>Genre</p>
         </div>
       </router-link>
-      <router-link to="/profile">
+      <router-link :to="{path: '/profile/' + this.$root.$data.id}">
         <div class="menu-item">
           <i class="fa fa-music fa-2x"></i>
           <p>Profile</p>
