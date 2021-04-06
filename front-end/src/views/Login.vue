@@ -2,13 +2,17 @@
 <div class="heading">
 <h1>Login To Start Listening</h1>
   <form @submit.prevent="goToProfile()">
-      <p>Username:</p>
-      <input type="text" v-model="username">
-      <p>Password:</p>
-      <input type="password" v-model="password">
-      <div class="button">
-        <button type="submit" class="login-button">Login</button>
-      </div>
+    <div class= "username">
+      <h3>Username:</h3>
+      <input type="text" v-model="username" placeholder="Enter Text Here">
+    </div>
+    <div class = "password">
+      <h3>Password:</h3>
+      <input type="password" v-model="password" placeholder="Enter Text Here">
+    </div>
+    <div class="button">
+      <button type="submit" class="login-button btn btn-primary">Login</button>
+    </div>
   </form>
     <p v-if="error" class="error">{{error}}</p>
 </div>
@@ -81,12 +85,15 @@ export default {
 <style scoped>
 form {
   border: 1px solid #ccc;
-  background-color: white;
+  border-color: #d73ff2;
+  background-color: black;
   border-radius: 4px;
   padding: 20px;
 }
 .button {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .login-button {
   margin-left: auto;
@@ -107,5 +114,19 @@ input {
   width: 100%;
   flex-direction: column;
   align-content: center;
+}
+.username {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.password {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+input {
+  color: #3fcef2;
+  padding-right: 25px;
 }
 </style>
