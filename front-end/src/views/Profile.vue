@@ -9,11 +9,12 @@
                   <div class="d-flex flex-column align-items-center text-center">
                     <img src="../../images/astronaut.png" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
-                      <h4>{{name}}</h4>
-                      <p class="text-secondary mb-1">{{work}}</p>
+                      <h4>{{profile.name}}</h4>
+                      <p class="text-secondary mb-1">{{profile.work}}</p>
                       <p class="text-muted font-size-sm">{{address}}</p>
-                      <button class="btn btn-primary">Edit</button>
-                      <button class="btn btn-outline-primary">Message</button>
+                      <!-- <button @click="uploadPhoto" class="btn btn-primary">Upload Photo</button> -->
+                      <button @click="deleteUser" class="btn btn-outline-primary">Delete Profile</button>
+                      <button @click="editProfile" class="btn btn-outline-primary">Save Changes</button>
                     </div>
                   </div>
                 </div>
@@ -27,7 +28,7 @@
                       <h6 class="mb-0">Full Name</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <input v-model="name" placeholder="Enter Text Here">
+                      <input v-model="profile.name" placeholder="Enter Text Here">
                     </div>
                   </div>
                   <hr>
@@ -36,7 +37,7 @@
                       <h6 class="mb-0">Email</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <input v-model="email" placeholder="Enter Text Here">
+                      <input v-model="profile.email" placeholder="Enter Text Here">
                     </div>
                   </div>
                   <hr>
@@ -45,7 +46,7 @@
                       <h6 class="mb-0">Phone</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <input v-model="phone" placeholder="Enter Text Here">
+                      <input v-model="profile.phone" placeholder="Enter Text Here">
                     </div>
                   </div>
                   <hr>
@@ -54,7 +55,7 @@
                       <h6 class="mb-0">Occupation</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <input v-model="work" placeholder="Enter Text Here">
+                      <input v-model="profile.work" placeholder="Enter Text Here">
                     </div>
                   </div>
                   <hr>
@@ -63,7 +64,7 @@
                       <h6 class="mb-0">City</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <input v-model="city" placeholder="Enter Text Here">
+                      <input v-model="profile.city" placeholder="Enter Text Here">
                     </div>
                   </div>
                   <hr>
@@ -72,7 +73,7 @@
                       <h6 class="mb-0">State</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <input v-model="state" placeholder="Enter Text Here">
+                      <input v-model="profile.state" placeholder="Enter Text Here">
                     </div>
                   </div>
                 </div>
@@ -126,13 +127,15 @@ export default {
   name: 'Profile',
   data() {
     return {
-      name: '',
-      email: '',
-      phone: '',
-      work: '',
-      city: '',
-      state: '',
-      image: '',
+      profile: {
+        name: "",
+        email: "",
+        phone: "",
+        work: "",
+        city: "",
+        state: "",
+        image: "",
+      },
       addInfo: null,
       file: null,
       findProfile: null,
@@ -145,37 +148,17 @@ export default {
   methods: {
     async getProfile() {
       try {
-          let response = await axios.get("/api/profile");
+          let response = await axios.get("/api/users/" + this.$route.params.id);
           this.profile = response.data;
           return true;
         } catch (error) {
           console.log(error);
         }
       },
-      async createProfile() {
-      try {
-        const formData = new FormData();
-        formData.append('photo', this.file, this.file.name)
-        let r1 = await axios.post('/api/photos', formData);
-        let r2 = await axios.post('/api/profile', {
-          name: this.name,
-          email: this.email,
-          phone: this.phone,
-          work: this.work,
-          city: this.city,
-          state: this.state,
-          image: r1.data.image,
-        });
-        this.addInfo = r2.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+
     async deleteUser() {
       try {
-        let userArray = this.users.map(user=>user.username);
-        this.$root.$data.id = this.users[userArray.indexOf(this.username)]._id
-        await axios.delete("/api/users/" + this.$root.$data.id);
+        await axios.delete("/api/users/" + this.$route.params.id);
         this.findUser = null;
         this.getProfile();
         return true;
@@ -185,14 +168,14 @@ export default {
     },
     async editProfile() {
       try {
-        await axios.put("/api/users/" + this.$root.$data.id, {
-          name: this.findUser.name,
-          email: this.findUser.email,
-          phone: this.findUser.phone,
-          work: this.findUser.work,
-          city: this.findUser.city,
-          state: this.findUser.state,
-          image: this.findUser.image,
+        await axios.put("/api/users/" + this.$route.params.id, {
+          name: this.profile.name,
+          email: this.profile.email,
+          phone: this.profile.phone,
+          work: this.profile.work,
+          city: this.profile.city,
+          state: this.profile.state,
+          image: this.profile.image,
         });
         this.findUser = null;
         this.getProfile();
@@ -205,7 +188,7 @@ export default {
   },
   computed: {
     address() {
-         return this.city + ', ' + this.state;
+         return this.profile.city + ', ' + this.profile.state;
     },
   },
 }

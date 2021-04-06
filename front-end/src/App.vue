@@ -7,23 +7,19 @@
           </router-link>
       </div>
       <div id="side">
-        <router-link to="/genre">
-        <div class="menu-item genre">
+      <router-link to="/home">
+        <div class="menu-item">
           <i class="fa fa-globe fa-2x"></i>
-          <p>Genre</p>
+          <p>Browse</p>
         </div>
       </router-link>
       <router-link :to="{path: '/profile/' + this.$root.$data.id}">
         <div class="menu-item">
-          <i class="fa fa-music fa-2x"></i>
+          <i class="fa fa-user fa-2x"></i>
           <p>Profile</p>
         </div>
       </router-link>
-      <router-link to="/home">
-        <div class="menu-item">
-          <p>Browse</p>
-        </div>
-      </router-link>
+
       <router-link to="/playlist">
         <div class="menu-item">
           <i class="fa fa-music fa-2x"></i>

@@ -25,19 +25,26 @@ const upload = multer({
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
+  image: String,
+  name: String,
+  email: String,
+  phone: String,
+  work: String,
+  city: String,
+  state: String,
 });
 const User = mongoose.model('User', userSchema);
 
 app.post('/api/users', async (req, res) => {
   const user = new User({
     username: req.body.username,
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    work: req.body.work,
-    city: req.body.city,
-    state: req.body.state,
-    image: req.body.image,
+    name: "",
+    email: "",
+    phone: "",
+    work: "",
+    city: "",
+    state: "",
+    image: "",
   });
   try {
     await user.save();
@@ -56,40 +63,51 @@ app.get('/api/users', async (req, res) => {
     res.sendStatus(500);
   }
 });
-const profileSchema = new mongoose.Schema ({
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User'
-  },
-  image: String,
-  name: String,
-  email: String,
-  phone: String,
-  work: String,
-  city: String,
-  state: String,
-});
-
-const Profile = mongoose.model('Profile', profileSchema);
-//create profile information
-app.post('/api/profile', async (req, res) => {
-  const profile = new Profile({
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    work: req.body.work,
-    city: req.body.city,
-    state: req.body.state,
-    image: req.body.image,
-  });
+app.get('/api/users/:id', async (req, res) => {
   try {
-    await profile.save();
-    res.send(profile);
+    let user = await User.findOne({
+      _id: req.params.id
+    });
+    res.send(user);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
   }
 });
+// const profileSchema = new mongoose.Schema ({
+//   user: {
+//     type: mongoose.Schema.ObjectId,
+//     ref: 'User'
+//   },
+//   image: String,
+//   name: String,
+//   email: String,
+//   phone: String,
+//   work: String,
+//   city: String,
+//   state: String,
+// });
+
+// const Profile = mongoose.model('Profile', profileSchema);
+// //create profile information
+// app.post('/api/profile', async (req, res) => {
+//   const profile = new Profile({
+//     name: req.body.name,
+//     email: req.body.email,
+//     phone: req.body.phone,
+//     work: req.body.work,
+//     city: req.body.city,
+//     state: req.body.state,
+//     image: req.body.image,
+//   });
+//   try {
+//     await profile.save();
+//     res.send(profile);
+//   } catch (error) {
+//     console.log(error);
+//     res.sendStatus(500);
+//   }
+// });
 //upload a profile picture
 app.post('/api/photos', upload.single('photo'), async (req, res) => {
   if (!req.file) {
@@ -114,17 +132,19 @@ app.delete('/api/users/:userID', async (req, res) =>{
 //Edit profile info
 app.put('/api/users/:userID', async (req, res) => {
   try {
-    let profile = await Profile.findOne({
-      _id: req.params.id
+    console.log(req.params.userID)
+    let user = await User.findOne({
+      _id: req.params.userID
     });
-    profile.name = req.body.name,
-    profile.email = req.body.email,
-    profile.phone = req.body.phone,
-    profile.work = req.body.work,
-    profile.city = req.body.city,
-    profile.state = req.body.state,
-    profile.image = req.body.image,
-    await profile.save();
+    user.name = req.body.name,
+    user.email = req.body.email,
+    user.phone = req.body.phone,
+    user.work = req.body.work,
+    user.city = req.body.city,
+    user.state = req.body.state,
+    user.image = req.body.image,
+    await user.save();
+    console.log(user)
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
