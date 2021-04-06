@@ -78,19 +78,6 @@
                   </div>
                 </div>
               </div>
-              <div class="row gutters-sm">
-                <div class="col-sm-6 mb-3">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Favorite Genre:</i>Indie</h6>
-                      <big>Number of Songs Listened to</big>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -184,7 +171,6 @@ export default {
         console.log(error);
       }
     },
-
   },
   computed: {
     address() {

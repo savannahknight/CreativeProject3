@@ -77,6 +77,9 @@ body {
   color: #3fcef2;
   margin-left: 20px;
 }
+i {
+  margin: auto;
+}
 #side img {
   width: 50px;
 }
@@ -86,7 +89,7 @@ body {
   color: #3fcef2;
 }
 .menu-item p {
-  margin: 0;
+  margin: 5px;
 }
 .genre {
   margin-right: 50px;
