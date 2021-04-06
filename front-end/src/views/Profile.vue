@@ -12,7 +12,7 @@
                       <h4>{{profile.name}}</h4>
                       <p class="text-secondary mb-1">{{profile.work}}</p>
                       <p class="text-muted font-size-sm">{{address}}</p>
-                      <!-- <button @click="uploadPhoto" class="btn btn-primary">Upload Photo</button> -->
+                      <button @click="uploadPhoto" class="btn btn-primary">Upload Photo</button>
                       <button @click="deleteUser" class="btn btn-outline-primary">Delete Profile</button>
                       <button @click="editProfile" class="btn btn-outline-primary">Save Changes</button>
                     </div>
@@ -147,12 +147,24 @@ export default {
       try {
         await axios.delete("/api/users/" + this.$route.params.id);
         this.findUser = null;
-        this.getProfile();
+        this.$router.push('/');
+        // this.getProfile();
         return true;
       } catch (error) {
         console.log(error);
       }
     },
+    async uploadPhoto() {
+      try {
+        const formData = new FormData();
+        formData.append('photo', this.file, this.file.name)
+        let r1 = await axios.post('/api/photos', formData);
+      }
+      this.addInfo = r1.data;
+      catch(error) {
+        console.log(error);
+      }
+    }
     async editProfile() {
       try {
         await axios.put("/api/users/" + this.$route.params.id, {

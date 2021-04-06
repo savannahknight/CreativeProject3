@@ -121,7 +121,7 @@ app.post('/api/photos', upload.single('photo'), async (req, res) => {
 app.delete('/api/users/:userID', async (req, res) =>{
   try {
     await User.deleteOne({
-      _id: req.params.id
+      _id: req.params.userID
     });
     res.sendStatus(200);
   } catch (error) {
