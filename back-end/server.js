@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/playlist', {
 });
 const multer = require('multer')
 const upload = multer({
-  dest: '../front-end/images/',
+  dest: '../front-end/public/images/',
   limits: {
     fileSize: 10000000
   }
@@ -114,7 +114,7 @@ app.post('/api/photos', upload.single('photo'), async (req, res) => {
     return res.sendStatus(400);
   }
   res.send({
-    path: "/images/" + req.file.filename
+    image: "/images/" + req.file.filename
   });
 });
 //Delete a users account
@@ -142,10 +142,25 @@ app.put('/api/users/:userID', async (req, res) => {
     user.work = req.body.work,
     user.city = req.body.city,
     user.state = req.body.state,
-    user.image = req.body.image,
     await user.save();
     console.log(user)
     res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+app.put('/api/photos/:userID', async (req, res) => {
+  try {
+    console.log(req.params.userID)
+    console.log(req.body.image)
+    let user = await User.findOne({
+      _id: req.params.userID
+    });
+    user.image = req.body.image,
+    await user.save();
+    console.log(user)
+    res.send(user);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

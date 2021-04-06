@@ -20,7 +20,7 @@
         </div>
       </router-link>
 
-      <router-link to="/playlist">
+      <router-link :to="{path: '/playlist/' + this.$root.$data.id}">
         <div class="menu-item">
           <i class="fa fa-music fa-2x"></i>
           <p>Playlist</p>
