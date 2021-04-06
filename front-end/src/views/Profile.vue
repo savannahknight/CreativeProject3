@@ -1,20 +1,26 @@
 <template>
     <div class="container">
-        <h1 id="Header">The Profile Page!</h1>
+        <h1 id="Header">Your Profile</h1>
     <div class="main-body">
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="../../images/astronaut.png" alt="Admin" class="rounded-circle" width="150">
+                    <div class="upload" v-if="addPhoto != ''">
+                      <img :src="addPhoto" class="rounded-circle" width="150">
+                    </div>
+                    <div class="upload-default" v-else>
+                      <img src="../../images/profile.png" class="rounded-circle" width="150">
+                    </div>
                     <div class="mt-3">
                       <h4>{{profile.name}}</h4>
                       <p class="text-secondary mb-1">{{profile.work}}</p>
                       <p class="text-muted font-size-sm">{{address}}</p>
-                      <button @click="uploadPhoto" class="btn btn-primary">Upload Photo</button>
+                      <input class="upload-photo" type="file" name="photo" @change="photoChanged">
+
                       <button @click="deleteUser" class="btn btn-outline-primary">Delete Profile</button>
-                      <button @click="editProfile" class="btn btn-outline-primary">Save Changes</button>
+                      <button @click="editProfile" class="btn btn-primary">Save Changes</button>
                     </div>
                   </div>
                 </div>
@@ -123,7 +129,7 @@ export default {
         state: "",
         image: "",
       },
-      addInfo: null,
+      addPhoto: null,
       file: null,
       findProfile: null,
       findUser: "",
@@ -137,6 +143,7 @@ export default {
       try {
           let response = await axios.get("/api/users/" + this.$route.params.id);
           this.profile = response.data;
+          this.addPhoto = this.profile.image;
           return true;
         } catch (error) {
           console.log(error);
@@ -159,12 +166,18 @@ export default {
         const formData = new FormData();
         formData.append('photo', this.file, this.file.name)
         let r1 = await axios.post('/api/photos', formData);
-      }
-      this.addInfo = r1.data;
-      catch(error) {
+        let r2 = await axios.put('/api/photos/'+this.$route.params.id, {
+          image: r1.data.image,
+        });
+        this.addPhoto = r2.data.image;
+      } catch(error) {
         console.log(error);
       }
-    }
+    },
+    photoChanged(event) {
+      this.file = event.target.files[0]
+      this.uploadPhoto();
+    },
     async editProfile() {
       try {
         await axios.put("/api/users/" + this.$route.params.id, {
@@ -174,7 +187,6 @@ export default {
           work: this.profile.work,
           city: this.profile.city,
           state: this.profile.state,
-          image: this.profile.image,
         });
         this.findUser = null;
         this.getProfile();
@@ -257,5 +269,9 @@ body{
 }
 input {
     color:aqua;
+}
+.upload-photo{
+  color: black;
+  margin-bottom: 20px;
 }
 </style>

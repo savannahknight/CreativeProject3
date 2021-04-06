@@ -30,7 +30,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/playlist',
+    path: '/playlist/:id',
     name: 'Playlist',
     component: Playlist
   },
