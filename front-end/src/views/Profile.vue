@@ -166,14 +166,6 @@ export default {
         const formData = new FormData();
         formData.append('photo', this.file, this.file.name)
         let r1 = await axios.post('/api/photos', formData);
-<<<<<<< HEAD
-        this.addInfo = r1.data;
-      }
-      catch(error) {
-        console.log(error);
-      }
-    },
-=======
         let r2 = await axios.put('/api/photos/'+this.$route.params.id, {
           image: r1.data.image,
         });
@@ -186,7 +178,6 @@ export default {
       this.file = event.target.files[0]
       this.uploadPhoto();
     },
->>>>>>> 703abb6f22d7bb967279467a492ed284c8aec7da
     async editProfile() {
       try {
         await axios.put("/api/users/" + this.$route.params.id, {
