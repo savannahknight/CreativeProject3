@@ -30,9 +30,9 @@
       </div>
       <div class="genre">
         <h2>{{song.genre}}</h2>
-        <button class="play" @click="playSong(song.id)"><i class="fa fa-play"></i></button>
+        <button class="play" @click="editSong(song._id)"><i class="fa fa-play"></i></button>
         <p class="quantity">Listened to {{timesPlayed(song)}} times</p>
-        <button class="auto" @click="removeItem(song.id)">Remove Song</button>
+        <button class="auto" @click="deleteSong(song._id)">Remove Song</button>
       </div>
       </div>
     </div>
@@ -62,19 +62,20 @@ export default {
 
   },
   created: async function(){
-    try {
-      let response = await axios.get("/api/users/" + this.$root.$data.id + "/songs");
-      this.$root.$data.playlist = response.data;
-      return true;
-    }
-      catch (error) {
-        console.log(error);
-      }
+    this.getUserPlaylist();
+    // try {
+    //   let response = await axios.get("/api/users/" + this.$route.params.id + "/songs");
+    //   this.$root.$data.playlist = response.data;
+    //   return true;
+    // }
+    //   catch (error) {
+    //     console.log(error);
+    //   }
   },
   methods: {
     async getUserPlaylist() {
       try {
-        let response = await axios.get("/api/users/" + this.$root.$data.id + "/songs");
+        let response = await axios.get("/api/users/" + this.$route.params.id + "/songs");
         this.$root.$data.playlist = response.data;
         return true;
       }
@@ -88,6 +89,15 @@ export default {
     }
     else {
       return song.amountPlayed;
+    }
+  },
+  async editSong(id) {
+    try {
+      await axios.put("/api/users/" + this.$route.params.id + "/songs/" + id);
+      this.getUserPlaylist();
+      return true;
+    } catch (error) {
+      console.log(error);
     }
   },
     playSong(id) {
@@ -112,7 +122,16 @@ export default {
       let item = this.$root.$data.playlist.find(item => item.id === id);
       const index = this.$root.$data.playlist.indexOf(item);
       this.$root.$data.playlist.splice(index, 1);
-    }
+    },
+    async deleteSong(id) {
+      try {
+        await axios.delete("/api/users/" + this.$route.params.id + "/songs/" + id);
+        this.getUserPlaylist();
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   }
 }
 </script>

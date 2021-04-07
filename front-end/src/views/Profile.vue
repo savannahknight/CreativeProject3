@@ -7,7 +7,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <div class="upload" v-if="addPhoto != ''">
+                    <div class="upload" v-if="addPhoto != null">
                       <img :src="addPhoto" class="rounded-circle" width="150">
                     </div>
                     <div class="upload-default" v-else>

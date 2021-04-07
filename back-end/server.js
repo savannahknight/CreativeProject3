@@ -175,6 +175,7 @@ const playlistSchema = new mongoose.Schema ({
   //path to the song from SongList.vue
   name: String,
   image: String,
+  amountPlayed: {type:Number, default:0},
   year: String,
   artist: String,
   genre: String,
@@ -215,6 +216,41 @@ app.get('/api/users/:userID/songs', async (req, res) => {
       user: user
     })
     res.send(playlist);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+app.put('/api/users/:userID/songs/:songID', async (req, res) =>{
+  try{
+    let song = await Playlist.findOne({
+      _id: req.params.songID,
+      user: req.params.userID,
+    });
+    if (!song) {
+        res.send(404);
+        return;
+    }
+    song.amountPlayed += 1;
+    console.log(song.amountPlayed);
+    await song.save();
+    res.send(song);
+  } catch(error) {
+    res.sendStatus(500);
+  }
+});
+app.delete('/api/users/:userID/songs/:songID', async (req, res) =>{
+  try {
+    let song = await Playlist.findOne({
+      _id: req.params.songID,
+      user: req.params.userID,
+    });
+    if (!song) {
+        res.send(404);
+        return;
+    }
+    await song.delete();
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
