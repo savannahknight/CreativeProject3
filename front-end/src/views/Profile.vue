@@ -7,8 +7,13 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
+<<<<<<< HEAD
                     <div class="upload" v-if="addPhoto != null">
                       <img :src="addPhoto" class="rounded-circle" width="150" alt="This is the profile photo">
+=======
+                    <div class="upload" v-if="addPhoto != null && addPhoto !=''">
+                      <img :src="addPhoto" class="rounded-circle" width="150">
+>>>>>>> b1b3d4b0878fdefaa996f9fabed026217c0ecec9
                     </div>
                     <div class="upload-default" v-else>
                       <img src="../../images/profile.png" class="rounded-circle" width="150" alt="This is the default photo">
