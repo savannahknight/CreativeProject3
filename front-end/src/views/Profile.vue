@@ -7,13 +7,8 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-<<<<<<< HEAD
-                    <div class="upload" v-if="addPhoto != null">
-                      <img :src="addPhoto" class="rounded-circle" width="150" alt="This is the profile photo">
-=======
                     <div class="upload" v-if="addPhoto != null && addPhoto !=''">
                       <img :src="addPhoto" class="rounded-circle" width="150">
->>>>>>> b1b3d4b0878fdefaa996f9fabed026217c0ecec9
                     </div>
                     <div class="upload-default" v-else>
                       <img src="../../images/profile.png" class="rounded-circle" width="150" alt="This is the default photo">
@@ -92,30 +87,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="empty">
-        <h4 v-show="this.$root.$data.playlist.length === 0">There are no songs in your playlist. Select more to start listening!</h4>
-        </div>
-
-        <div class="songs">
-          <div class="container" v-for="song in this.$root.$data.playlist" :key="song.id">
-            <div class="song">
-            <div class="info">
-              <h1>{{song.name}}</h1>
-              <h2>{{song.artist}}</h2>
-              <p>{{song.year}}</p>
-            </div>
-            <div class="image">
-              <img :src="require('/images/'+song.image)">
-            </div>
-            <div class="genre">
-              <h2>{{song.genre}}</h2>
-              <button class="play" @click="playSong(song.id)"><i class="fa fa-play"></i></button>
-              <p class="quantity">Listened to {{timesPlayed(song)}} times</p>
-              <button class="auto" @click="removeItem(song.id)">Remove Song</button>
-            </div>
-            </div>
-          </div>
-        </div> -->
     </div>
 </template>
 
@@ -255,6 +226,7 @@ body{
     margin-left: -8px;
 }
 
+
 .gutters-sm>.col, .gutters-sm>[class*=col-] {
     padding-right: 8px;
     padding-left: 8px;
@@ -279,4 +251,11 @@ input {
   color: black;
   margin-bottom: 20px;
 }
+@media only screen and (max-width: 400px) {
+    .mt-3 {
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
 </style>
