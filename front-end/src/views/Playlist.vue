@@ -12,6 +12,8 @@
   </div>
   <div>
   <p class="amount">{{calcQuantity}} Songs In Your Playlist</p>
+  <!-- <p class="amount"> {{calcTotalPlays}} Total Number of Songs Played </p> -->
+  <p class = "amount"> Favorite Genre:  {{calcFavoriteGenre}} </p>
   </div>
   <div class="empty">
   <h4 v-show="this.$root.$data.playlist.length === 0">There are no songs in your playlist. Select more to start listening!</h4>
@@ -52,6 +54,37 @@ export default {
   computed: {
     calcQuantity(){
       return this.$root.$data.playlist.length;
+    },
+    // calcTotalPlays() {
+    //   let totalPlays = 0;
+    //   for(let i = 0; i < this.$root.$data.playlist.length; i++) {
+    //     totalPlays += this.$root.$data.playlist[i].amountPlayed;
+    //   }
+    //   return totalPlays;
+    // },
+    calcFavoriteGenre() {
+      if(this.$root.$data.playlist.length === 0) {
+        return "Not Available Until Songs Are Added to Playlist";
+      }
+      let favoriteGenre = "";
+      let indieList = this.$root.$data.playlist.filter(song => song.genre.toLowerCase() === "indie");
+      let countryList = this.$root.$data.playlist.filter(song => song.genre.toLowerCase() === "country");
+      let popList = this.$root.$data.playlist.filter(song => song.genre.toLowerCase() === "pop");
+      let rbList = this.$root.$data.playlist.filter(song => song.genre.toLowerCase() === "r&b");
+      let maxValue = Math.max(indieList.length, countryList.length, popList.length, rbList.length);
+      if (indieList.length === maxValue) {
+        favoriteGenre = "Indie";
+      }
+      if (countryList.length === maxValue) {
+        favoriteGenre = "Country";
+      }
+      if (popList.length === maxValue) {
+        favoriteGenre = "Pop";
+      }
+      else {
+        favoriteGenre = "R&B";
+      }
+      return favoriteGenre;
     },
     playlist() {
       return this.$root.$data.playlist;
