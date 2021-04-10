@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const argon2 = require("argon2");
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -8,12 +10,6 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-
-// connect to the database
-mongoose.connect('mongodb://localhost:27017/playlist', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
 const multer = require('multer')
 const upload = multer({
   dest: '../front-end/public/images/',
@@ -33,22 +29,114 @@ const userSchema = new mongoose.Schema({
   city: String,
   state: String,
 });
-const User = mongoose.model('User', userSchema);
 
-app.post('/api/users', async (req, res) => {
-  const user = new User({
-    username: req.body.username,
-    name: "",
-    email: "",
-    phone: "",
-    work: "",
-    city: "",
-    state: "",
-    image: "",
-  });
+// connect to the database
+mongoose.connect('mongodb://localhost:27017/playlist', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: 'session',
+  keys: [
+    'secretValue'
+  ],
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
+//salt and hash the password first.
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password'))
+    return next();
+
   try {
-    await user.save();
-    res.send(user);
+    const hash = await argon2.hash(this.password);
+    this.password = hash;
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+userSchema.methods.comparePassword = async function(password) {
+  try {
+    const isMatch = await argon2.verify(this.password, password);
+    return isMatch;
+  } catch (error) {
+    return false;
+  }
+};
+
+userSchema.methods.toJSON = function() {
+  var obj = this.toObject();
+  delete obj.password;
+  return obj;
+}
+
+const User = mongoose.model('User', userSchema);
+//register a user
+app.post('/api/users', async (req, res) => {
+  if (!req.body.username || !req.body.password)
+    return res.status(400).send({
+      message: "username and password are required"
+    });
+    try {
+      const existingUser = await User.findOne({
+        username: req.body.username
+      });
+      if (existingUser)
+        return res.status(403).send({
+          message: "username already exists"
+        });
+      const user = new User({
+        username: req.body.username,
+        password: req.body.password,
+        name: req.body.name,
+        // name: "",
+        email: "",
+        phone: "",
+        work: "",
+        city: "",
+        state: "",
+        image: "",
+      });
+      await user.save();
+      res.send({
+        user: user
+      });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+//login a user
+app.post('/api/users/login', async (req, res) => {
+  if (!req.body.username || !req.body.password)
+    return res.status(400).send({
+      message: "username and password are required"
+    });
+    try {
+      const user = await User.findOne({
+        username: req.body.username
+      });
+      if (!user)
+        return res.status(403).send({
+          message: "username or password is wrong"
+        });
+      if (!await user.comparePassword(req.body.password))
+        return res.status(403).send({
+          message: "username or password is wrong"
+        });
+      return res.send({
+        user: user
+      });
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -74,40 +162,6 @@ app.get('/api/users/:id', async (req, res) => {
     res.sendStatus(500);
   }
 });
-// const profileSchema = new mongoose.Schema ({
-//   user: {
-//     type: mongoose.Schema.ObjectId,
-//     ref: 'User'
-//   },
-//   image: String,
-//   name: String,
-//   email: String,
-//   phone: String,
-//   work: String,
-//   city: String,
-//   state: String,
-// });
-
-// const Profile = mongoose.model('Profile', profileSchema);
-// //create profile information
-// app.post('/api/profile', async (req, res) => {
-//   const profile = new Profile({
-//     name: req.body.name,
-//     email: req.body.email,
-//     phone: req.body.phone,
-//     work: req.body.work,
-//     city: req.body.city,
-//     state: req.body.state,
-//     image: req.body.image,
-//   });
-//   try {
-//     await profile.save();
-//     res.send(profile);
-//   } catch (error) {
-//     console.log(error);
-//     res.sendStatus(500);
-//   }
-// });
 //upload a profile picture
 app.post('/api/photos', upload.single('photo'), async (req, res) => {
   if (!req.file) {
@@ -257,27 +311,4 @@ app.delete('/api/users/:userID/songs/:songID', async (req, res) =>{
   }
 });
 
-// app.post('/api/users/:userID/songs', async (req, res) => {
-//     try {
-//         let playlist = await Project.findOne({_id: req.params.userID});
-//         if (!playlist) {
-//             res.send(404);
-//             return;
-//         }
-//         let profile = new Profile({
-//             user: user,
-//             fullName: req.body.fullName,
-//             email: req.body.email,
-//             phone: req.body.phone,
-//             address: req.body.address,
-//             path: req.body.path,
-//         });
-//         await item.save();
-//         res.send(profile);
-//     } catch (error) {
-//         console.log(error);
-//         res.sendStatus(500);
-//     }
-// });
-
-app.listen(3001, () => console.log('Server listening on port 3000!'));
+app.listen(3001, () => console.log('Server listening on port 3001!'));

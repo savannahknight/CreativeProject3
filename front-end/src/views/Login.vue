@@ -1,20 +1,37 @@
 <template>
 <div class="heading">
-<h1>Login To Start Listening</h1>
-  <form @submit.prevent="goToProfile()">
-    <div class= "username">
-      <h5>Username:</h5>
-      <input type="text" v-model="username" placeholder="Enter Text Here">
-    </div>
-    <div class = "password">
-      <h5>Password:</h5>
-      <input type="password" v-model="password" placeholder="Enter Text Here">
-    </div>
-    <div class="button">
-      <button type="submit" class="login-button btn btn-primary">Login</button>
-    </div>
-  </form>
+  <div class="container">
+    <form class="pure-form">
+      <fieldset>
+        <legend>Register For An Account</legend>
+        <input placeholder="Full Name" v-model="name">
+      </fieldset>
+      <fieldset>
+        <input placeholder="Username" v-model="username">
+        <input type="password" placeholder="Password" v-model="password">
+      </fieldset>
+      <fieldset>
+        <div class="button">
+          <button type="submit" class="login-button btn btn-primary" @click.prevent="uploadUser">Register</button>
+        </div>
+      </fieldset>
+          <!-- <form @submit.prevent="goToProfile()"> -->
+    </form>
     <p v-if="error" class="error">{{error}}</p>
+    <form class="pure-form space-above">
+      <fieldset>
+        <legend>Login To Start Listening</legend>
+        <input placeholder="username" v-model="usernameLogin">
+        <input type="password" placeholder="password" v-model="passwordLogin">
+      </fieldset>
+      <fieldset>
+        <div class="button">
+          <button type="submit" class="login-button btn btn-primary" @click.prevent="login">Login</button>
+        </div>
+      </fieldset>
+      </form>
+        <p v-if="errorLogin" class="error">{{errorLogin}}</p>
+  </div>
 </div>
 </template>
 
@@ -26,7 +43,11 @@ export default {
     return {
       username: '',
       password: '',
+      name: '',
+      usernameLogin: '',
+      passwordLogin: '',
       error: '',
+      errorLogin: '',
       users:[],
     }
 
@@ -53,16 +74,40 @@ export default {
           console.log(error);
         }
     },
+    // register a user
     async uploadUser() {
+      this.error = '';
+      this.errorLogin = '';
+      if (!this.name || !this.username || !this.password)
+        return;
       try {
-        await axios.post("/api/users", {
+        let response = await axios.post("/api/users", {
+          name: this.name,
           username: this.username,
           password: this.password,
         });
-      }
-        catch (error) {
-          console.log(error);
+        this.$root.$data.user = response.data.user;
+      } catch (error) {
+          this.error = error.response.data.message;
+          this.$root.$data.user = null;
         }
+    },
+    // login a user
+    async login() {
+      this.error = '';
+      this.errorLogin = '';
+      if (!this.usernameLogin || !this.passwordLogin)
+        return;
+      try {
+        let response = await axios.post('/api/users/login', {
+          username: this.usernameLogin,
+          password: this.passwordLogin,
+        });
+        this.$root.$data.user = response.data.user;
+      } catch (error) {
+        this.errorLogin = "Error: " + error.response.data.message;
+        this.$root.$data.user = null;
+      }
     },
     async goToProfile(){
       let userArray = this.users.map(user=>user.username);
@@ -90,6 +135,9 @@ form {
   border-radius: 4px;
   padding: 20px;
 }
+.space-above {
+  margin-top: 50px;
+}
 .button {
   display: flex;
   justify-content: center;
@@ -114,6 +162,15 @@ input {
   width: 100%;
   flex-direction: column;
   align-content: center;
+}
+.container {
+  text-align: center;
+}
+.heading form{
+  font-size: 14px;
+}
+.heading form legend{
+  font-size: 20px;
 }
 .username {
   display: flex;
