@@ -12,7 +12,9 @@
       </div>
       <div class="genre">
         <h2>{{song.genre}}</h2>
-        <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button>
+        <button class="auto" v-if="user" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button>
+        <button class="auto" v-else @click="setShow">Add to Playlist</button>
+        <PopUp :show="show" @close="closeShow"/>
         <!-- <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button> -->
       </div>
     </div>
@@ -22,10 +24,24 @@
 
 <script>
 import axios from 'axios';
+import PopUp from '../components/PopUp.vue';
 export default {
   name: 'SongList',
+  components: {
+    PopUp,
+  },
   props: {
     songs: Array
+  },
+  data() {
+    return {
+      show: false,
+    }
+  },
+  computed: {
+    user() {
+      return this.$root.$data.user;
+    }
   },
   methods: {
     async addItem(id, name, image, year, artist, genre){
@@ -47,13 +63,20 @@ export default {
             artist: artist,
             genre: genre,
           });
+          this.show = true;
         }
           catch (error) {
             console.log(error);
           }
       }
     },
-  }
+    setShow() {
+      this.show = true;
+    },
+    closeShow() {
+      this.show = false;
+    }
+  },
 }
 </script>
 

@@ -21,8 +21,8 @@
     <form class="pure-form space-above">
       <fieldset>
         <legend>Login To Start Listening</legend>
-        <input placeholder="username" v-model="usernameLogin">
-        <input type="password" placeholder="password" v-model="passwordLogin">
+        <input placeholder="Username" v-model="usernameLogin">
+        <input type="password" placeholder="Password" v-model="passwordLogin">
       </fieldset>
       <fieldset>
         <div class="button">
@@ -52,28 +52,18 @@ export default {
     }
 
   },
-  created: async function(){
-      try {
-        let response = await axios.get("/api/users");
-        this.users = response.data;
-        return true;
-      }
-        catch (error) {
-          console.log(error);
-        }
-    },
   methods: {
-    async getUsers() {
-      try {
-        let response = await axios.get("/api/users");
-        this.users = response.data;
-        console.log(this.users);
-        return true;
-      }
-        catch (error) {
-          console.log(error);
-        }
-    },
+    // async getUsers() {
+    //   try {
+    //     let response = await axios.get("/api/users");
+    //     this.users = response.data;
+    //     console.log(this.users);
+    //     return true;
+    //   }
+    //     catch (error) {
+    //       console.log(error);
+    //     }
+    // },
     // register a user
     async uploadUser() {
       this.error = '';
@@ -109,21 +99,21 @@ export default {
         this.$root.$data.user = null;
       }
     },
-    async goToProfile(){
-      let userArray = this.users.map(user=>user.username);
-      if(userArray.includes(this.username)) {
-        this.$root.$data.id = this.users[userArray.indexOf(this.username)]._id
-        this.$router.push('/profile/' + this.users[userArray.indexOf(this.username)]._id);
-      }
-      else {
-        console.log("not in array");
-        await this.uploadUser();
-        await this.getUsers();
-        userArray = await this.users.map(user=>user.username);
-        this.$root.$data.id = this.users[userArray.indexOf(this.username)]._id
-        this.$router.push('/profile/' + this.users[userArray.indexOf(this.username)]._id);
-      }
-    },
+    // async goToProfile(){
+    //   let userArray = this.users.map(user=>user.username);
+    //   if(userArray.includes(this.username)) {
+    //     this.$root.$data.id = this.users[userArray.indexOf(this.username)]._id
+    //     this.$router.push('/profile/' + this.users[userArray.indexOf(this.username)]._id);
+    //   }
+    //   else {
+    //     console.log("not in array");
+    //     await this.uploadUser();
+    //     await this.getUsers();
+    //     userArray = await this.users.map(user=>user.username);
+    //     this.$root.$data.id = this.users[userArray.indexOf(this.username)]._id
+    //     this.$router.push('/profile/' + this.users[userArray.indexOf(this.username)]._id);
+    //   }
+    // },
   }
 }
 </script>
@@ -165,6 +155,7 @@ input {
 }
 .container {
   text-align: center;
+  margin-bottom: 30px;
 }
 .heading form{
   font-size: 14px;
@@ -184,7 +175,18 @@ input {
 }
 input {
   color: #3fcef2;
-  padding-right: 25px;
-  margin-left: 25px;
+  /* padding-right: 25px;
+  margin-left: 25px; */
+  margin-right: 10px;
+}
+
+.error {
+  margin-top: 10px;
+  display: inline;
+  padding: 5px 20px;
+  border-radius: 30px;
+  font-size: 10px;
+  background-color: #d9534f;
+  color: #fff;
 }
 </style>

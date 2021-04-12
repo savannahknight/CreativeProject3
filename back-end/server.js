@@ -80,11 +80,35 @@ userSchema.methods.toJSON = function() {
 }
 
 const User = mongoose.model('User', userSchema);
+
+const validUser = async (req, res, next) => {
+  if (!req.session.userID)
+    return res.status(403).send({
+      message: "not logged in"
+    });
+  try {
+    const user = await User.findOne({
+      _id: req.session.userID
+    });
+    if (!user) {
+      return res.status(403).send({
+        message: "not logged in"
+      });
+    }
+    req.user = user;
+  } catch (error) {
+    return res.status(403).send({
+      message: "not logged in"
+    });
+  }
+  next();
+};
+
 //register a user
 app.post('/api/users', async (req, res) => {
-  if (!req.body.username || !req.body.password)
+  if (!req.body.username || !req.body.password || !req.body.name)
     return res.status(400).send({
-      message: "username and password are required"
+      message: "name, username and password are required"
     });
     try {
       const existingUser = await User.findOne({
@@ -107,7 +131,8 @@ app.post('/api/users', async (req, res) => {
         image: "",
       });
       await user.save();
-      res.send({
+      req.session.userID = user._id;
+      return res.send({
         user: user
       });
   } catch (error) {
@@ -134,32 +159,56 @@ app.post('/api/users/login', async (req, res) => {
         return res.status(403).send({
           message: "username or password is wrong"
         });
+      req.session.userID = user._id;
+
       return res.send({
         user: user
       });
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 });
-app.get('/api/users', async (req, res) => {
+//get logged in user
+app.get('/api/users', validUser, async (req, res) => {
   try {
-    let users = await User.find();
-    res.send(users);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
-app.get('/api/users/:id', async (req, res) => {
-  try {
-    let user = await User.findOne({
-      _id: req.params.id
+    console.log(validUser);
+    res.send({
+      user: req.user
     });
-    res.send(user);
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    return res.sendStatus(500);
+  }
+});
+// app.get('/api/users', validUser, async (req, res) => {
+//   try {
+//     let users = await User.find();
+//     res.send(users);
+//   } catch (error) {
+//     console.log(error);
+//     res.sendStatus(500);
+//   }
+// });
+// app.get('/api/users/:id', async (req, res) => {
+//   try {
+//     let user = await User.findOne({
+//       _id: req.params.id
+//     });
+//     res.send(user);
+//   } catch (error) {
+//     console.log(error);
+//     res.sendStatus(500);
+//   }
+// });
+//logout a user
+app.delete('/api/users/logout', validUser, async (req, res) => {
+  try {
+    req.session = null;
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
   }
 });
 //upload a profile picture
@@ -172,10 +221,10 @@ app.post('/api/photos', upload.single('photo'), async (req, res) => {
   });
 });
 //Delete a users account
-app.delete('/api/users/:userID', async (req, res) =>{
+app.delete('/api/users', validUser, async (req, res) =>{
   try {
     await User.deleteOne({
-      _id: req.params.userID
+      user: req.user
     });
     res.sendStatus(200);
   } catch (error) {
@@ -184,11 +233,11 @@ app.delete('/api/users/:userID', async (req, res) =>{
   }
 });
 //Edit profile info
-app.put('/api/users/:userID', async (req, res) => {
+app.put('/api/users', validUser, async (req, res) => {
   try {
     console.log(req.params.userID)
     let user = await User.findOne({
-      _id: req.params.userID
+      user: req.user
     });
     user.name = req.body.name,
     user.email = req.body.email,
@@ -204,12 +253,12 @@ app.put('/api/users/:userID', async (req, res) => {
     res.sendStatus(500);
   }
 });
-app.put('/api/photos/:userID', async (req, res) => {
+app.put('/api/photos', validUser, async (req, res) => {
   try {
     console.log(req.params.userID)
     console.log(req.body.image)
     let user = await User.findOne({
-      _id: req.params.userID
+      user: req.user
     });
     user.image = req.body.image,
     await user.save();
@@ -230,6 +279,10 @@ const playlistSchema = new mongoose.Schema ({
   name: String,
   image: String,
   amountPlayed: {type:Number, default:0},
+  created: {
+    type: Date,
+    default: Date.now
+  },
   year: String,
   artist: String,
   genre: String,
@@ -310,5 +363,15 @@ app.delete('/api/users/:userID/songs/:songID', async (req, res) =>{
     res.sendStatus(500);
   }
 });
-
+const commentSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
+  comment: String,
+  created: {
+    type: Date,
+    default: Date.now
+  },
+});
 app.listen(3001, () => console.log('Server listening on port 3001!'));

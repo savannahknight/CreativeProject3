@@ -7,18 +7,24 @@
           </router-link>
       </div>
       <div id="side">
-      <router-link to="/home">
+      <div class="menu-item">
+        <router-link to="/redirect"><i class="fa fa-user fa-2x"></i></router-link>
+        <p v-show="user">Profile</p>
+        <p v-show="!user">Login</p>
+      </div>
+      <router-link to="/genre">
         <div class="menu-item">
           <i class="fa fa-globe fa-2x"></i>
           <p>Browse</p>
         </div>
       </router-link>
-      <router-link :to="{path: '/profile/' + this.$root.$data.id}">
+      <!-- <p v-else><a @click="logout"></a>Logout</p> -->
+      <!-- <router-link :to="{path: '/profile/' + this.$root.$data.id}">
         <div class="menu-item">
           <i class="fa fa-user fa-2x"></i>
           <p>Profile</p>
         </div>
-      </router-link>
+      </router-link> -->
 
       <router-link :to="{path: '/playlist/' + this.$root.$data.id}">
         <div class="menu-item">
@@ -27,20 +33,40 @@
         </div>
       </router-link>
     </div>
+    <button v-if="user" @click="logout" class="logout-button btn btn-primary">Logout</button>
   </div>
   <router-view />
     <div class="footer">
-      <a href="https://github.com/savannahknight/CreativeProject3.git">Git Repository</a>
+      <div class="footer-link">
+        <a href="https://github.com/savannahknight/CreativeProject3.git">Git Repository</a>
+      </div>
+      <div class="bottom">
+        &copy; savannahbyu.com | Created by Savannah Knight and Justin Hill
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'App',
   computed: {
-
+    user() {
+      return this.$root.$data.user;
+    }
   },
+  methods: {
+  async logout() {
+    try {
+      await axios.delete("/api/users");
+      this.$root.$data.user = null;
+    } catch (error) {
+      this.$root.$data.user = null;
+    }
+  },
+}
+
 }
 </script>
 <style>
@@ -100,11 +126,15 @@ i {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 40px;
+  height: 80px;
   text-align: center;
   padding: 10px;
+  padding-top: 20px;
 }
-.footer a{
+.bottom {
+  color: white;
+}
+.footer-link a{
   color: white;
 }
 a, a:hover, a:focus {
@@ -115,5 +145,8 @@ a, a:hover, a:focus {
 .fa {
   color: #3fcef2;
   align-items: flex-end;
+}
+.logout-button {
+  width: 80px;
 }
 </style>

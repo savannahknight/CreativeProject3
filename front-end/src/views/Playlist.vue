@@ -2,7 +2,7 @@
 
 <div class="wrapper">
   <div class="heading">
-  <h1>Your Playlist</h1>
+  <h1>{{user.name}}'s Playlist</h1>
 
   <div class="search">
     <form class="pure-form">

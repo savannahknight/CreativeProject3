@@ -27,6 +27,7 @@ export default {
     songs() {
       return this.$root.$data.songs.filter(song => song.name.toLowerCase().search(this.searchText.toLowerCase()) >= 0);
     }
+
   },
 }
 </script>

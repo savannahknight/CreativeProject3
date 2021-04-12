@@ -113,23 +113,27 @@ export default {
   },
   created() {
     this.getProfile();
+    console.log("loadingProfile");
   },
   methods: {
     async getProfile() {
       try {
-          let response = await axios.get("/api/users/" + this.$route.params.id);
-          this.profile = response.data;
+          let response = await axios.get("/api/users");
+          this.profile = response.data.user;
+          this.$root.$data.user = response.data.user;
           this.addPhoto = this.profile.image;
           return true;
         } catch (error) {
+          this.$root.$data.user = null;
           console.log(error);
         }
       },
 
     async deleteUser() {
       try {
-        await axios.delete("/api/users/" + this.$route.params.id);
+        await axios.delete("/api/users");
         this.findUser = null;
+        this.$root.$data.user = null;
         this.$router.push('/');
         // this.getProfile();
         return true;
@@ -137,12 +141,20 @@ export default {
         console.log(error);
       }
     },
+    async logout() {
+      try {
+        await axios.delete("/api/users/logout");
+        this.$root.$data.user = null;
+      } catch (error) {
+        this.$root.$data.user = null;
+      }
+    },
     async uploadPhoto() {
       try {
         const formData = new FormData();
         formData.append('photo', this.file, this.file.name)
         let r1 = await axios.post('/api/photos', formData);
-        let r2 = await axios.put('/api/photos/'+this.$route.params.id, {
+        let r2 = await axios.put('/api/photos', {
           image: r1.data.image,
         });
         this.addPhoto = r2.data.image;
@@ -156,7 +168,7 @@ export default {
     },
     async editProfile() {
       try {
-        await axios.put("/api/users/" + this.$route.params.id, {
+        await axios.put("/api/users", {
           name: this.profile.name,
           email: this.profile.email,
           phone: this.profile.phone,
@@ -176,6 +188,9 @@ export default {
     address() {
          return this.profile.city + ', ' + this.profile.state;
     },
+    user() {
+      return this.$root.$data.user;
+    }
   },
 }
 </script>
@@ -250,6 +265,9 @@ input {
 .upload-photo{
   color: black;
   margin-bottom: 20px;
+}
+.main-body {
+  margin-bottom: 30px;
 }
 @media only screen and (max-width: 400px) {
     .mt-3 {
