@@ -156,6 +156,7 @@ input {
 .container {
   text-align: center;
   margin-bottom: 30px;
+  width: 70%;
 }
 .heading form{
   font-size: 14px;
@@ -189,4 +190,9 @@ input {
   background-color: #d9534f;
   color: #fff;
 }
+@media only screen and (max-width: 680px) {
+    .container {
+      width: 100%;
+    }
+  }
 </style>

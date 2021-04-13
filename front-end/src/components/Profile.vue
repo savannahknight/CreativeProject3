@@ -213,6 +213,7 @@ body{
 }
 .container {
     color: pink;
+    margin-bottom: 25px;
 }
 
 .card {
@@ -228,6 +229,7 @@ body{
 }
 .main-body {
     background-color: white;
+    margin-bottom: 30px;
 }
 
 .card-body {
@@ -265,9 +267,6 @@ input {
 .upload-photo{
   color: black;
   margin-bottom: 20px;
-}
-.main-body {
-  margin-bottom: 30px;
 }
 @media only screen and (max-width: 400px) {
     .mt-3 {

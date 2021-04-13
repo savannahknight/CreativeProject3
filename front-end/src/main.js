@@ -8,8 +8,7 @@ let data = {
   playlist: [],
   id: "",
   user: {
-    firstName: '',
-    lastName: '',
+    name: '',
   }
 }
 Vue.config.productionTip = false

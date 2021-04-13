@@ -172,7 +172,6 @@ app.post('/api/users/login', async (req, res) => {
 //get logged in user
 app.get('/api/users', validUser, async (req, res) => {
   try {
-    console.log(validUser);
     res.send({
       user: req.user
     });
@@ -224,7 +223,7 @@ app.post('/api/photos', upload.single('photo'), async (req, res) => {
 app.delete('/api/users', validUser, async (req, res) =>{
   try {
     await User.deleteOne({
-      user: req.user
+      _id: req.user._id
     });
     res.sendStatus(200);
   } catch (error) {
@@ -235,9 +234,8 @@ app.delete('/api/users', validUser, async (req, res) =>{
 //Edit profile info
 app.put('/api/users', validUser, async (req, res) => {
   try {
-    console.log(req.params.userID)
     let user = await User.findOne({
-      user: req.user
+      _id: req.user._id
     });
     user.name = req.body.name,
     user.email = req.body.email,
@@ -258,7 +256,7 @@ app.put('/api/photos', validUser, async (req, res) => {
     console.log(req.params.userID)
     console.log(req.body.image)
     let user = await User.findOne({
-      user: req.user
+      _id: req.user._id
     });
     user.image = req.body.image,
     await user.save();
@@ -281,7 +279,7 @@ const playlistSchema = new mongoose.Schema ({
   amountPlayed: {type:Number, default:0},
   created: {
     type: Date,
-    default: Date.now
+    // default: Date.now
   },
   year: String,
   artist: String,
@@ -289,11 +287,13 @@ const playlistSchema = new mongoose.Schema ({
 });
 
 const Playlist = mongoose.model('Playlist', playlistSchema);
-app.post('/api/users/:userID/songs', async (req, res) => {
+app.post('/api/users/songs', validUser, async (req, res) => {
+    console.log(req.user);
     try {
-        let user = await User.findOne({_id: req.params.userID});
+        let user = await User.findOne({_id: req.user._id});
+        console.log(user);
         if (!user) {
-            res.send(404);
+            res.sendStatus(404);
             return;
         }
         let playlist = new Playlist({
@@ -312,9 +312,9 @@ app.post('/api/users/:userID/songs', async (req, res) => {
         res.sendStatus(500);
     }
 });
-app.get('/api/users/:userID/songs', async (req, res) => {
+app.get('/api/users/songs', validUser, async (req, res) => {
   try {
-    let user = await User.findOne({_id: req.params.userID});
+    let user = await User.findOne({_id: req.user._id});
     if (!user) {
         res.send(404);
         return;
@@ -328,16 +328,17 @@ app.get('/api/users/:userID/songs', async (req, res) => {
     res.sendStatus(500);
   }
 });
-app.put('/api/users/:userID/songs/:songID', async (req, res) =>{
+app.put('/api/users/songs/:songID', validUser, async (req, res) =>{
   try{
     let song = await Playlist.findOne({
       _id: req.params.songID,
-      user: req.params.userID,
+      // user: req.user,
     });
     if (!song) {
         res.send(404);
         return;
     }
+    song.created = Date.now();
     song.amountPlayed += 1;
     console.log(song.amountPlayed);
     await song.save();
@@ -346,11 +347,11 @@ app.put('/api/users/:userID/songs/:songID', async (req, res) =>{
     res.sendStatus(500);
   }
 });
-app.delete('/api/users/:userID/songs/:songID', async (req, res) =>{
+app.delete('/api/users/songs/:songID', validUser, async (req, res) =>{
   try {
     let song = await Playlist.findOne({
       _id: req.params.songID,
-      user: req.params.userID,
+      // user: req.params.userID,
     });
     if (!song) {
         res.send(404);
@@ -363,15 +364,15 @@ app.delete('/api/users/:userID/songs/:songID', async (req, res) =>{
     res.sendStatus(500);
   }
 });
-const commentSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User'
-  },
-  comment: String,
-  created: {
-    type: Date,
-    default: Date.now
-  },
-});
+// const commentSchema = new mongoose.Schema({
+//   user: {
+//     type: mongoose.Schema.ObjectId,
+//     ref: 'User'
+//   },
+//   comment: String,
+//   created: {
+//     type: Date,
+//     default: Date.now
+//   },
+// });
 app.listen(3001, () => console.log('Server listening on port 3001!'));

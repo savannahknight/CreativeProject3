@@ -7,11 +7,16 @@
           </router-link>
       </div>
       <div id="side">
-      <div class="menu-item">
-        <router-link to="/redirect"><i class="fa fa-user fa-2x"></i></router-link>
-        <p v-show="user">Profile</p>
-        <p v-show="!user">Login</p>
-      </div>
+        <router-link  to="/redirect">
+          <!-- v-if="!user" -->
+          <!-- <p v-else @click="setShow"></p> -->
+          <!-- <PopUp v-else @close="closeShow"/> -->
+          <div class="menu-item">
+            <i class="fa fa-user fa-2x"></i>
+            <p v-show="user">Profile</p>
+            <p v-show="!user">Login</p>
+          </div>
+      </router-link>
       <router-link to="/genre">
         <div class="menu-item">
           <i class="fa fa-globe fa-2x"></i>
@@ -26,7 +31,7 @@
         </div>
       </router-link> -->
 
-      <router-link :to="{path: '/playlist/' + this.$root.$data.id}">
+      <router-link to="/playlist">
         <div class="menu-item">
           <i class="fa fa-music fa-2x"></i>
           <p>Playlist</p>
@@ -56,15 +61,26 @@ export default {
       return this.$root.$data.user;
     }
   },
+  data() {
+    return {
+      show: false,
+    }
+  },
   methods: {
   async logout() {
     try {
-      await axios.delete("/api/users");
+      await axios.delete("/api/users/logout");
       this.$root.$data.user = null;
     } catch (error) {
       this.$root.$data.user = null;
     }
   },
+  setShow() {
+    this.show = true;
+  },
+  closeShow() {
+    this.show = false;
+  }
 }
 
 }

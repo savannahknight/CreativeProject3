@@ -7,15 +7,15 @@
         <p class="sign-text">Sign in to add songs to your playlist</p>
       </div>
       <div class="buttons">
-        <router-link to="/redirect"><button class="logout-button btn btn-primary"></button>Log in</router-link>
-        <router-link to="/redirect"><button class="btn btn-primary"></button>Sign up</router-link>
+        <router-link to="/redirect"><button class="logout-button btn btn-primary">Log in</button></router-link>
+        <router-link to="/redirect"><button class="btn btn-primary">Sign up</button></router-link>
         <button type="button" @click="close" class="pure-button">Close</button>
       </div>
     </div>
   </div>
 </transition>
 </template>
-
+<!-- not registering that i am logged out when i click to sign in -->
 <script>
 export default {
   name: 'Uploader',
@@ -36,7 +36,6 @@ export default {
 </script>
 
 <style scoped>
-/* Modals */
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -44,7 +43,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: transparent;
   transition: opacity 0.5s ease;
   display: flex;
   transition: background 0.2s ease-in-out, height 1s ease-in-out;
@@ -60,18 +59,10 @@ export default {
   padding: 20px 30px;
   background-color: white;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  box-shadow: 0 2px 8px white;
   transition: all 0.5s ease;
 }
 
-/*
-* The following styles are auto-applied to elements with
-* transition="modal" when their visibility is toggled
-* by Vue.js.
-*
-* You can easily play with the modal transition by editing
-* these styles.
-*/
 .modal-enter {
   opacity: 0;
 }
@@ -124,6 +115,7 @@ textarea {
 .buttons {
   display: flex;
   justify-content: space-between;
+  background-color: white;
 }
 .notice{
   text-align: center;

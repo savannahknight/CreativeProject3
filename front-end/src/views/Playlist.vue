@@ -1,8 +1,10 @@
 <template>
-
+<!-- when i refresh the page the vue content shows the fisrt & last name as emptpy -->
+<!-- CSS for profile page/choose photo wont show up -->
+<!-- margin at bottom of profile page -->
 <div class="wrapper">
   <div class="heading">
-  <h1>{{user.name}}'s Playlist</h1>
+  <h1>{{this.$root.$data.user.name}}'s Playlist</h1>
 
   <div class="search">
     <form class="pure-form">
@@ -20,7 +22,7 @@
   </div>
 
   <div class="songs">
-    <div class="container" v-for="song in this.$root.$data.playlist" :key="song.id">
+    <div class="container" v-for="song in songs" :key="song.id">
       <div class="song">
       <div class="info">
         <h1>{{song.name}}</h1>
@@ -34,6 +36,7 @@
         <h2>{{song.genre}}</h2>
         <button class="play" @click="editSong(song._id)"><i class="fa fa-play"></i></button>
         <p class="quantity">Listened to {{timesPlayed(song)}} times</p>
+        <p class="date" v-if="song.created">Played {{formatDate(song.created)}}</p>
         <button class="auto" @click="deleteSong(song._id)">Remove Song</button>
       </div>
       </div>
@@ -44,6 +47,7 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 export default {
   name: 'Playlist',
   data() {
@@ -52,6 +56,9 @@ export default {
     }
   },
   computed: {
+    user() {
+      return this.$root.$data.user;
+    },
     calcQuantity(){
       return this.$root.$data.playlist.length;
     },
@@ -90,11 +97,11 @@ export default {
       return this.$root.$data.playlist;
     },
     songs() {
-      return this.$root.$data.songs.filter(song => song.name.toLowerCase().search(this.searchText.toLowerCase()) >= 0);
+      return this.$root.$data.playlist.filter(song => song.name.toLowerCase().search(this.searchText.toLowerCase()) >= 0);
     },
 
   },
-  created: async function(){
+  created() {
     this.getUserPlaylist();
     // try {
     //   let response = await axios.get("/api/users/" + this.$route.params.id + "/songs");
@@ -106,15 +113,23 @@ export default {
     //   }
   },
   methods: {
+    // getMessage() {
+    //
+    // }
     async getUserPlaylist() {
+      // if (this.$root.$data.user == null) {
+      //   this.getMessage();
+      // }
+      // else {
       try {
-        let response = await axios.get("/api/users/" + this.$route.params.id + "/songs");
+        let response = await axios.get("/api/users/songs/");
         this.$root.$data.playlist = response.data;
         return true;
       }
         catch (error) {
           console.log(error);
         }
+      // }
     },
   timesPlayed(song) {
     if (song.amountPlayed === undefined) {
@@ -126,7 +141,7 @@ export default {
   },
   async editSong(id) {
     try {
-      await axios.put("/api/users/" + this.$route.params.id + "/songs/" + id);
+      await axios.put("/api/users/songs/" + id);
       this.getUserPlaylist();
       return true;
     } catch (error) {
@@ -158,12 +173,18 @@ export default {
     },
     async deleteSong(id) {
       try {
-        await axios.delete("/api/users/" + this.$route.params.id + "/songs/" + id);
+        await axios.delete("/api/users/songs/" + id);
         this.getUserPlaylist();
         return true;
       } catch (error) {
         console.log(error);
       }
+    },
+    formatDate(date) {
+      if (moment(date).diff(Date.now(), 'days') < 15)
+        return moment(date).fromNow();
+      else
+        return moment(date).format('d MMMM YYYY');
     },
   }
 }
@@ -317,5 +338,10 @@ input {
   display: flex;
   text-align: center;
   justify-content: center;
+}
+.date {
+  background-color: #d73ff2;
+  color: white;
+  margin-left: 20px;
 }
 </style>

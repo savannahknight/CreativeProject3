@@ -12,7 +12,7 @@
       </div>
       <div class="genre">
         <h2>{{song.genre}}</h2>
-        <button class="auto" v-if="user" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button>
+        <button class="auto" v-if="user != null" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button>
         <button class="auto" v-else @click="setShow">Add to Playlist</button>
         <PopUp :show="show" @close="closeShow"/>
         <!-- <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button> -->
@@ -56,14 +56,14 @@ export default {
       if (!found) {
         console.log("not found")
         try {
-          await axios.post("/api/users/" + this.$root.$data.id + "/songs", {
+          await axios.post("/api/users/songs" , {
             name: name,
             image: image,
             year: year,
             artist: artist,
             genre: genre,
           });
-          this.show = true;
+          this.show = false;
         }
           catch (error) {
             console.log(error);
@@ -87,7 +87,7 @@ export default {
   justify-content: center;
 }
 .songs {
-  margin-top: 20px;
+  margin-bottom: 25px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

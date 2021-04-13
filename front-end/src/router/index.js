@@ -31,7 +31,7 @@ const routes = [
   //   component: Login
   // },
   {
-    path: '/playlist/:id',
+    path: '/playlist',
     name: 'Playlist',
     component: Playlist
   },
