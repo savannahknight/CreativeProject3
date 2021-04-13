@@ -15,7 +15,6 @@
           <button type="submit" class="login-button btn btn-primary" @click.prevent="uploadUser">Register</button>
         </div>
       </fieldset>
-          <!-- <form @submit.prevent="goToProfile()"> -->
     </form>
     <p v-if="error" class="error">{{error}}</p>
     <form class="pure-form space-above">
@@ -53,18 +52,6 @@ export default {
 
   },
   methods: {
-    // async getUsers() {
-    //   try {
-    //     let response = await axios.get("/api/users");
-    //     this.users = response.data;
-    //     console.log(this.users);
-    //     return true;
-    //   }
-    //     catch (error) {
-    //       console.log(error);
-    //     }
-    // },
-    // register a user
     async uploadUser() {
       this.error = '';
       this.errorLogin = '';
@@ -99,21 +86,6 @@ export default {
         this.$root.$data.user = null;
       }
     },
-    // async goToProfile(){
-    //   let userArray = this.users.map(user=>user.username);
-    //   if(userArray.includes(this.username)) {
-    //     this.$root.$data.id = this.users[userArray.indexOf(this.username)]._id
-    //     this.$router.push('/profile/' + this.users[userArray.indexOf(this.username)]._id);
-    //   }
-    //   else {
-    //     console.log("not in array");
-    //     await this.uploadUser();
-    //     await this.getUsers();
-    //     userArray = await this.users.map(user=>user.username);
-    //     this.$root.$data.id = this.users[userArray.indexOf(this.username)]._id
-    //     this.$router.push('/profile/' + this.users[userArray.indexOf(this.username)]._id);
-    //   }
-    // },
   }
 }
 </script>
@@ -155,7 +127,7 @@ input {
 }
 .container {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 100px;
   width: 70%;
 }
 .heading form{
@@ -176,8 +148,6 @@ input {
 }
 input {
   color: #3fcef2;
-  /* padding-right: 25px;
-  margin-left: 25px; */
   margin-right: 10px;
 }
 

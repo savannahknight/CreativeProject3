@@ -7,9 +7,7 @@ let data = {
   songs: mock,
   playlist: [],
   id: "",
-  user: {
-    name: '',
-  }
+  user: null,
 }
 Vue.config.productionTip = false
 

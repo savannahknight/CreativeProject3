@@ -17,8 +17,8 @@
                       <h4>{{profile.name}}</h4>
                       <p class="text-secondary mb-1">{{profile.work}}</p>
                       <p class="text-muted font-size-sm">{{address}}</p>
-                      <input class="upload-photo" type="file" name="photo" @change="photoChanged">
-
+                      <input class="upload-photo" type="file" id="selectFiles" name="photo" @change="photoChanged">
+                      <label for="selectFiles" class="select" @change="photoChanged">Select File</label><br>
                       <button @click="deleteUser" class="btn btn-outline-primary">Delete Profile</button>
                       <button @click="editProfile" class="btn btn-primary">Save Changes</button>
                     </div>
@@ -213,7 +213,7 @@ body{
 }
 .container {
     color: pink;
-    margin-bottom: 25px;
+    margin-bottom: 100px;
 }
 
 .card {
@@ -226,10 +226,11 @@ body{
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
     border-radius: .25rem;
+
 }
 .main-body {
     background-color: white;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .card-body {
@@ -268,11 +269,42 @@ input {
   color: black;
   margin-bottom: 20px;
 }
-@media only screen and (max-width: 400px) {
+#selectFiles {
+  opacity: 0;
+  overflow: hidden;
+  width: 0.1px;
+  height: 0.1px;
+}
+.select {
+  color: black;
+  background-color: #c9ccd1;
+  border-radius: 2px;
+  width: 100px;
+  margin-left: 20px;
+}
+@media only screen and (max-width: 600px) {
     .mt-3 {
       display:flex;
       flex-direction: column;
       justify-content: center;
+    }
+    .card {
+      width: 100vw;
+      left: 0;
+      position: relative;
+      border-color: black;
+    }
+    .mb-3 {
+      border: none;
+      border-color: black;
+    }
+    .col-md-8 {
+      width: 100vw;
+      justify-content: center;
+      text-align: center;
+    }
+    .main-body {
+      background-color: black;
     }
   }
 </style>

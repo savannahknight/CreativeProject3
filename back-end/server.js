@@ -180,26 +180,6 @@ app.get('/api/users', validUser, async (req, res) => {
     return res.sendStatus(500);
   }
 });
-// app.get('/api/users', validUser, async (req, res) => {
-//   try {
-//     let users = await User.find();
-//     res.send(users);
-//   } catch (error) {
-//     console.log(error);
-//     res.sendStatus(500);
-//   }
-// });
-// app.get('/api/users/:id', async (req, res) => {
-//   try {
-//     let user = await User.findOne({
-//       _id: req.params.id
-//     });
-//     res.send(user);
-//   } catch (error) {
-//     console.log(error);
-//     res.sendStatus(500);
-//   }
-// });
 //logout a user
 app.delete('/api/users/logout', validUser, async (req, res) => {
   try {
@@ -332,7 +312,6 @@ app.put('/api/users/songs/:songID', validUser, async (req, res) =>{
   try{
     let song = await Playlist.findOne({
       _id: req.params.songID,
-      // user: req.user,
     });
     if (!song) {
         res.send(404);
@@ -351,7 +330,6 @@ app.delete('/api/users/songs/:songID', validUser, async (req, res) =>{
   try {
     let song = await Playlist.findOne({
       _id: req.params.songID,
-      // user: req.params.userID,
     });
     if (!song) {
         res.send(404);
@@ -364,15 +342,5 @@ app.delete('/api/users/songs/:songID', validUser, async (req, res) =>{
     res.sendStatus(500);
   }
 });
-// const commentSchema = new mongoose.Schema({
-//   user: {
-//     type: mongoose.Schema.ObjectId,
-//     ref: 'User'
-//   },
-//   comment: String,
-//   created: {
-//     type: Date,
-//     default: Date.now
-//   },
-// });
+
 app.listen(3001, () => console.log('Server listening on port 3001!'));

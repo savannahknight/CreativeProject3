@@ -15,7 +15,6 @@
         <button class="auto" v-if="user != null" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button>
         <button class="auto" v-else @click="setShow">Add to Playlist</button>
         <PopUp :show="show" @close="closeShow"/>
-        <!-- <button class="auto" @click="addItem(song.id, song.name, song.image, song.year, song.artist, song.genre)">Add to Playlist</button> -->
       </div>
     </div>
   </div>
@@ -87,7 +86,7 @@ export default {
   justify-content: center;
 }
 .songs {
-  margin-bottom: 25px;
+  margin-bottom: 35px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

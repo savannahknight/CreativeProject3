@@ -8,9 +8,6 @@
       </div>
       <div id="side">
         <router-link  to="/redirect">
-          <!-- v-if="!user" -->
-          <!-- <p v-else @click="setShow"></p> -->
-          <!-- <PopUp v-else @close="closeShow"/> -->
           <div class="menu-item">
             <i class="fa fa-user fa-2x"></i>
             <p v-show="user">Profile</p>
@@ -23,13 +20,6 @@
           <p>Browse</p>
         </div>
       </router-link>
-      <!-- <p v-else><a @click="logout"></a>Logout</p> -->
-      <!-- <router-link :to="{path: '/profile/' + this.$root.$data.id}">
-        <div class="menu-item">
-          <i class="fa fa-user fa-2x"></i>
-          <p>Profile</p>
-        </div>
-      </router-link> -->
 
       <router-link to="/playlist">
         <div class="menu-item">
@@ -47,6 +37,7 @@
       </div>
       <div class="bottom">
         &copy; savannahbyu.com | Created by Savannah Knight and Justin Hill
+        <p>12 Hours</p>
       </div>
     </div>
   </div>
@@ -66,6 +57,9 @@ export default {
       show: false,
     }
   },
+  created() {
+    this.getUser();
+  },
   methods: {
   async logout() {
     try {
@@ -75,6 +69,16 @@ export default {
       this.$root.$data.user = null;
     }
   },
+  async getUser() {
+    try {
+        let response = await axios.get("/api/users");
+        this.$root.$data.user = response.data.user;
+        return true;
+      } catch (error) {
+        this.$root.$data.user = null;
+        console.log(error);
+      }
+    },
   setShow() {
     this.show = true;
   },
@@ -142,7 +146,7 @@ i {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 80px;
+  height: 90px;
   text-align: center;
   padding: 10px;
   padding-top: 20px;

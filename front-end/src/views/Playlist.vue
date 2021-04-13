@@ -1,7 +1,4 @@
 <template>
-<!-- when i refresh the page the vue content shows the fisrt & last name as emptpy -->
-<!-- CSS for profile page/choose photo wont show up -->
-<!-- margin at bottom of profile page -->
 <div class="wrapper">
   <div class="heading">
   <h1>{{this.$root.$data.user.name}}'s Playlist</h1>
@@ -14,7 +11,6 @@
   </div>
   <div>
   <p class="amount">{{calcQuantity}} Songs In Your Playlist</p>
-  <!-- <p class="amount"> {{calcTotalPlays}} Total Number of Songs Played </p> -->
   <p class = "amount"> Favorite Genre:  {{calcFavoriteGenre}} </p>
   </div>
   <div class="empty">
@@ -62,13 +58,6 @@ export default {
     calcQuantity(){
       return this.$root.$data.playlist.length;
     },
-    // calcTotalPlays() {
-    //   let totalPlays = 0;
-    //   for(let i = 0; i < this.$root.$data.playlist.length; i++) {
-    //     totalPlays += this.$root.$data.playlist[i].amountPlayed;
-    //   }
-    //   return totalPlays;
-    // },
     calcFavoriteGenre() {
       if(this.$root.$data.playlist.length === 0) {
         return "Not Available Until Songs Are Added to Playlist";
@@ -103,24 +92,9 @@ export default {
   },
   created() {
     this.getUserPlaylist();
-    // try {
-    //   let response = await axios.get("/api/users/" + this.$route.params.id + "/songs");
-    //   this.$root.$data.playlist = response.data;
-    //   return true;
-    // }
-    //   catch (error) {
-    //     console.log(error);
-    //   }
   },
   methods: {
-    // getMessage() {
-    //
-    // }
     async getUserPlaylist() {
-      // if (this.$root.$data.user == null) {
-      //   this.getMessage();
-      // }
-      // else {
       try {
         let response = await axios.get("/api/users/songs/");
         this.$root.$data.playlist = response.data;
@@ -129,7 +103,6 @@ export default {
         catch (error) {
           console.log(error);
         }
-      // }
     },
   timesPlayed(song) {
     if (song.amountPlayed === undefined) {
